@@ -10,6 +10,7 @@ export const Navbar = () => {
             <TextNavbar spanIcon="menu" text="" />
           </div>
           <div>
+            
             <img src="" alt="" />
           </div>
           <div className="flex">
@@ -17,7 +18,7 @@ export const Navbar = () => {
             <TextNavbar spanIcon="language" text="Idioma" />
             <TextNavbar spanIcon="info" text="Ayuda" />
             <TextNavbar spanIcon="person" text="Admin" />
-            
+
           </div>
         </ul>
       </nav>
