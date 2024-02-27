@@ -53,40 +53,49 @@ function UsersList() {
   };
 
   return( 
-    <div>
-    <h2>Listado de Usuarios</h2>
-    <button onClick={openModal}>Agregar Usuario</button>
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Listado de Usuarios</h2>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={openModal}
+      >
+        Agregar Usuario
+      </button>
       <AddUser isOpen={isModalOpen} closeModal={closeModal} addUser={addUser} />
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre de Usuario</th>
-          <th>Email</th>
-          <th>Nombre de Empresa</th>
-          <th>Número de Teléfono</th>
-          <th>Papel</th>
-          <th>Estado</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map(users => (
-          <tr key={users.id}>
-            <td>{users.username}</td>
-            <td>{users.email}</td>
-            <td>{users.empresa}</td>
-            <td>{users.telefono}</td>
-            <td>{users.role}</td>
-            <td>{users.status}</td>
-            <td>
-              <button>Edit</button>
-              <button>Delete</button>
-            </td>
+      <table className="table-auto w-full">
+        <thead>
+          <tr>
+            <th className="px-4 py-2">Nombre de Usuario</th>
+            <th className="px-4 py-2">Email</th>
+            <th className="px-4 py-2">Nombre de Empresa</th>
+            <th className="px-4 py-2">Número de Teléfono</th>
+            <th className="px-4 py-2">Papel</th>
+            <th className="px-4 py-2">Estado</th>
+            <th className="px-4 py-2">Acción</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td className="border px-4 py-2">{user.username}</td>
+              <td className="border px-4 py-2">{user.email}</td>
+              <td className="border px-4 py-2">{user.empresa}</td>
+              <td className="border px-4 py-2">{user.telefono}</td>
+              <td className="border px-4 py-2">{user.role}</td>
+              <td className="border px-4 py-2">{user.status}</td>
+              <td className="border px-4 py-2">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
+                  Edit
+                </button>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
