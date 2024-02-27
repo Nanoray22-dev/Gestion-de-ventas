@@ -92,12 +92,12 @@ function UsersList() {
         closeModal={closeModal}
         addUser={addUser}
       />
-      <EditUserModal
+      {/* <EditUserModal
         isOpen={isEditModalOpen}
         onClose={closeEditModal}
         onSave={handleEditUser}
         user={selectedUserId} // Pass selectedUserId instead of selectedUser
-      />
+      /> */}
       <table>
         <thead>
           <tr>

@@ -1,30 +1,22 @@
+import "./App.css";
 
-import './App.css'
-import { Navbar } from './Components/Navbar'
+import UsersList from "./Components/Gestion_usuarios/UsersList";
 
-import UsersList from './Components/Gestion_usuarios/UsersList'
-
-import Cards from './Components/Cards'
-
-
-
+import Cards from "./Components/Cards";
+import { Navbar } from "./Components/Navbar/Navbar";
+import { TablaVentas } from "./Components/AgregarVentas/TablaVentas";
 
 function App() {
-
-
   return (
     <>
+      {/* <Navbar/> */}
 
-      <Navbar/>
+     {/*  <Cards />
 
-
-    <Cards />
-      
-
-      <UsersList/>
-
+      <UsersList /> */}
+      <TablaVentas/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
