@@ -1,6 +1,6 @@
 import  { useEffect, useState } from "react";
 import axios from "axios";
-import AddUser from "./AddUser";
+import AddUserModal from "./AddUserModal";
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,7 +61,7 @@ function UsersList() {
       >
         Agregar Usuario
       </button>
-      <AddUser isOpen={isModalOpen} closeModal={closeModal} addUser={addUser} />
+      <AddUserModal isOpen={isModalOpen} closeModal={closeModal} addUser={addUser} />
       <table className="table-auto w-full">
         <thead>
           <tr>
