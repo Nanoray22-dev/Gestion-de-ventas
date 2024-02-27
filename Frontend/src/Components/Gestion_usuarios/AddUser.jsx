@@ -60,7 +60,7 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
           <label>Estado:</label>
           <input type="text" name="status" value={userData.status} onChange={handleChange} />
         </div>
-        <button type="submit">Agregar Usuario</button>
+        <button type="submit">Agregar Usuario</button> <br />
         <button type="button" onClick={closeModal}>Cancelar</button>
       </form>
     </Modal>
@@ -75,7 +75,7 @@ export default AddUserModal;
 
 
 AddUserModal.propTypes = {
-    isOpen: PropTypes.string.isRequired,
-    closeModal: PropTypes.string.isRequired,
-    addUser: PropTypes.string.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    closeModal: PropTypes.func.isRequired,
+    addUser: PropTypes.func.isRequired,
   };
