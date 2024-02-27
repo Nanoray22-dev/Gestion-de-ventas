@@ -74,8 +74,8 @@ class usuariosController extends Controller
         }
 
         $request->validate([
-            'username' => 'required|unique:users,username,' . $id,
-            'email' => 'required|email|unique:users,email,' . $id,
+            'username' => 'required|unique:usuarios,username,' . $id,
+            'email' => 'required|email|unique:usuarios,email,' . $id,
             'role' => 'required|in:Administrador,RespVentasTiendas,SupervisorComercial',
             'status' => 'required|in:active,inactive',
         ]);
@@ -90,7 +90,7 @@ class usuariosController extends Controller
     public function destroy(string $id)
     {
         $user = Usuarios::find($id);
-        if(!!$user){
+        if(!$user){
             return response()->json(['error' => 'Usuarios no encontrado'], 404);
         }
         $user->delete();
