@@ -1,30 +1,14 @@
-
-import './App.css'
-import { Navbar } from './Components/Navbar'
-
-import UsersList from './Components/Gestion_usuarios/UsersList'
-
-import Cards from './Components/Cards'
-
-
-
+import "./App.css";
+import Cards from "./Components/Cards";
+import UsersList from "./Components/UsersList";
 
 function App() {
-
-
   return (
     <>
+      <Cards />
 
-      <Navbar/>
-
-
-    <Cards />
-      
-
-      <UsersList/>
-
+      <UsersList />
     </>
-  )
+  );
 }
-
-export default App
+export default App;
