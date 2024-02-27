@@ -1,14 +1,15 @@
 import { useState } from "react";
 import PropTypes from 'prop-types';
+import Modal from 'react-modal';
 
-function EditUserModal({ user, onSave, onClose }) {
+function EditUserModal({ isOpen, user, onSave, onClose }) {
   const [userData, setUserData] = useState({
     username: user.username || '',
     email: user.email || '',
-    roleName: user.roleName || '',
-    status: user.status || '',
-    companyName: user.companyName || '', // Adding companyName to initial state
-    phoneNumber: user.phoneNumber || '', // Adding phoneNumber to initial state
+    empresa: user.empresa || '',
+    telefono: user.telefono || '',
+    role: user.role || '',
+    status: user.status || ''
   });
 
   const handleChange = (e) => {
@@ -26,9 +27,12 @@ function EditUserModal({ user, onSave, onClose }) {
   };
 
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      contentLabel="Editar Usuario"
+    >
+      <div>
         <h2>Editar Usuario</h2>
         <form onSubmit={handleSubmit}>
           <label>Nombre de Usuario:</label>
@@ -36,29 +40,24 @@ function EditUserModal({ user, onSave, onClose }) {
           <label>Email:</label>
           <input type="email" name="email" value={userData.email} onChange={handleChange} />
           <label>Nombre de la Empresa:</label>
-          <input type="text" name="companyName" value={userData.companyName} onChange={handleChange} />
+          <input type="text" name="empresa" value={userData.companyName} onChange={handleChange} />
           <label>Número de Teléfono:</label>
-          <input type="text" name="phoneNumber" value={userData.phoneNumber} onChange={handleChange} />
+          <input type="text" name="telefono" value={userData.phoneNumber} onChange={handleChange} />
           <label>Rol:</label>
-          <input type="text" name="roleName" value={userData.roleName} onChange={handleChange} />
+          <input type="text" name="role" value={userData.role} onChange={handleChange} />
           <label>Estado:</label>
           <input type="text" name="status" value={userData.status} onChange={handleChange} />
           <button type="submit">Guardar Cambios</button>
+          <button onClick={onClose}>Cerrar</button>
         </form>
       </div>
-    </div>
+    </Modal>
   );
 }
 
 EditUserModal.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string,
-    email: PropTypes.string,
-    roleName: PropTypes.string,
-    status: PropTypes.string,
-    companyName: PropTypes.string,
-    phoneNumber: PropTypes.string,
-  }).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

@@ -1,6 +1,11 @@
-import "./App.css";
-import Cards from "./Components/Cards";
-import UsersList from "./Components/UsersList";
+
+
+import './App.css'
+
+import UsersList from './Components/Gestion_usuarios/UsersList'
+
+import Cards from './Components/Cards'
+
 
 function App() {
   return (
