@@ -6,11 +6,11 @@ export const Navbar = () => {
     <>
       <nav className=" bg-slate-100 p-[15px] text-gray-500 shadow-lg shadow-gray-300">
         <ul className="flex items-center justify-between">
-          <div className="bg-gray-300 rounded-[5px] hover:bg-slate-700 transition-all">
+          <div className="rounded-[5px] hover:transition hover:duration-700 hover:ease-in-out hover:bg-slate-500">
             <TextNavbar spanIcon="menu" text="" />
           </div>
           <div>
-            <img src="" alt="img" />
+            <img src="" alt="" />
           </div>
           <div className="flex">
             <TextNavbar spanIcon="shopping_bag" text="Ventas" />
