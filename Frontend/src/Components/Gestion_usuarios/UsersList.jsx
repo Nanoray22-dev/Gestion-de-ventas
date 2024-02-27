@@ -3,6 +3,7 @@ import axios from "axios";
 import AddUserModal from "./AddUser";
 import EditUserModal from "./EditUserModal";
 
+
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -92,12 +93,14 @@ function UsersList() {
         closeModal={closeModal}
         addUser={addUser}
       />
-      <EditUserModal
-        isOpen={isEditModalOpen}
-        onClose={closeEditModal}
-        onSave={handleEditUser}
-        user={selectedUserId} // Pass selectedUserId instead of selectedUser
-      />
+    {selectedUserId && (
+  <EditUserModal
+    isOpen={isEditModalOpen}
+    onClose={closeEditModal}
+    onSave={handleEditUser}
+    user={users.find(user => user.id === selectedUserId)}
+  />
+)}
       <table>
         <thead>
           <tr>
