@@ -137,7 +137,7 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
           </div>
         </form>
       </div>
-=======
+
       <h2>Agregar Usuario</h2>
       <form onSubmit={handleSubmit}>
         <div>
