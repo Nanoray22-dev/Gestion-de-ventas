@@ -10,9 +10,9 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-slate-100 p-[15px] text-gray-500 shadow-lg shadow-gray-300">
+      <nav className="bg-slate-100 p-[20px] text-gray-500 shadow-sm shadow-gray-300 top-0 fixed inset-x-64 right-0 z-10">
         <ul className="flex items-center justify-between">
-          <div className="rounded-[5px] hover:transition hover:duration-700 hover:ease-in-out bg-slate-200">
+          <div className="rounded-[5px] hover:transition hover:duration-700 hover:ease-in-out bg-slate-100">
             <TextNavbar spanIcon="menu" text="" />
           </div>
           <div>

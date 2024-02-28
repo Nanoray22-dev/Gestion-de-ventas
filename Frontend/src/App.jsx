@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="flex">
       <SideBar />
+      <Navbar />
       <div className="flex-1 p-8">
-        <Navbar />
         <Cards />
       </div>
     </div>
