@@ -1,5 +1,6 @@
 import React from "react";
 import { Cantidad } from "./Cantidad";
+import { Botones } from "./Botones";
 
 export const TablaVentas = () => {
   return (
@@ -55,7 +56,47 @@ export const TablaVentas = () => {
         <Cantidad descripcion="Impuesto" cantidad="0,00" />
         <Cantidad descripcion="Envío" cantidad="0,00" />
         <h2>TOTAL 0.00</h2>
-
+        <Botones
+        iconText="payments"
+        text="Efectivo"
+        />
+         <Botones
+        iconText="save"
+        text="Por Cobrar"
+        />
+         <Botones
+        iconText="qr_code"
+        text="Qr"
+        />
+         <Botones
+        iconText="home"
+        text="Deposito"
+        />
+         <Botones
+        iconText="save"
+        text="Generar Pre-Venta"
+        />
+         <Botones
+        iconText="close"
+        text="Cancelar"
+        />
+        <Botones
+        iconText="schedule"
+        text="Ventas Recientes"
+        />
+         <Botones
+        iconText="download"
+        text="Abonar Ventas"
+        />
+         <Botones
+        iconText="shopping_cart"
+        text="PreVentas"
+        />
+         <Botones
+        iconText="save"
+        text="Generar-Pro-Forma"
+        />
+   
         
       </div>
     </>

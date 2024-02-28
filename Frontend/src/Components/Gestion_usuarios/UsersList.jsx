@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
-import { Menu } from '@headlessui/react';
+import { Menu } from "@headlessui/react";
 
 function UsersList() {
   const [users, setUsers] = useState([]);
@@ -37,12 +37,15 @@ function UsersList() {
 
   const addUser = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/users', userData);
-      console.log('Usuario agregado correctamente');
+      const response = await axios.post(
+        "http://localhost:8000/api/users",
+        userData
+      );
+      console.log("Usuario agregado correctamente");
       closeModal();
       fetchUsers();
     } catch (error) {
-      console.error('Error al agregar usuario:', error.message);
+      console.error("Error al agregar usuario:", error.message);
     }
   };
 
@@ -53,27 +56,31 @@ function UsersList() {
 
   const handleEditUser = async (userData) => {
     try {
-      const response = await axios.put(`http://localhost:8000/api/users/${userData.id}`, userData);
-      console.log('Usuario editado correctamente');
+      const response = await axios.put(
+        `http://localhost:8000/api/users/${userData.id}`,
+        userData
+      );
+      console.log("Usuario editado correctamente");
       closeEditModal();
       fetchUsers();
     } catch (error) {
-      console.error('Error al editar usuario:', error.message);
+      console.error("Error al editar usuario:", error.message);
     }
   };
 
   const deleteUser = async (userId) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/users/${userId}`);
-      console.log('Usuario eliminado correctamente');
+      const response = await axios.delete(
+        `http://localhost:8000/api/users/${userId}`
+      );
+      console.log("Usuario eliminado correctamente");
       fetchUsers();
     } catch (error) {
-      console.error('Error al eliminar usuario:', error.message);
+      console.error("Error al eliminar usuario:", error.message);
     }
   };
 
   return (
-<<<<<<< HEAD
     <div>
       <h2>Listado de Usuarios</h2>
       <button onClick={openModal}>Agregar Usuario</button>
@@ -89,26 +96,6 @@ function UsersList() {
         user={selectedUserId} // Pass selectedUserId instead of selectedUser
       /> */}
       <table>
-=======
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Listado de Usuarios</h2>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={openModal}
-      >
-        Agregar Usuario
-      </button>
-      <AddUserModal isOpen={isModalOpen} closeModal={closeModal} addUser={addUser} />
-      {selectedUserId && (
-        <EditUserModal
-          isOpen={isEditModalOpen}
-          onClose={closeEditModal}
-          onSave={handleEditUser}
-          user={users.find(user => user.id === selectedUserId)}
-        />
-      )}
-      <table className="table-auto w-full">
->>>>>>> 7e8a08535b75d09eb0a2a7eedd25b78d6912a7e9
         <thead>
           <tr>
             <th className="px-4 py-2">Nombre de Usuario</th>
@@ -137,11 +124,17 @@ function UsersList() {
                         Acciones
                       </Menu.Button>
 
-                      <Menu.Items className={`${open ? 'block' : 'hidden'} absolute z-10 right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 focus:outline-none`}>
+                      <Menu.Items
+                        className={`${
+                          open ? "block" : "hidden"
+                        } absolute z-10 right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 focus:outline-none`}
+                      >
                         <Menu.Item>
                           {({ active }) => (
                             <button
-                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                              className={`${
+                                active ? "bg-gray-100" : ""
+                              } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
                               onClick={() => openEditModal(user.id)}
                             >
                               Editar
@@ -151,7 +144,9 @@ function UsersList() {
                         <Menu.Item>
                           {({ active }) => (
                             <button
-                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                              className={`${
+                                active ? "bg-gray-100" : ""
+                              } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
                               onClick={() => deleteUser(user.id)}
                             >
                               Eliminar

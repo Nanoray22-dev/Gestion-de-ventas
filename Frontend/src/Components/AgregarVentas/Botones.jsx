@@ -1,10 +1,16 @@
 import React from 'react'
 
-export const Botones = () => {
+export const Botones = ({iconText,
+  text}) => {
   return (
     <>
-    
-    <button></button>
+    <a href="">
+    <span className="material-symbols-outlined">
+{iconText}
+</span>
+    <button>{text}</button>
+
+    </a>
     </>
   )
 }
