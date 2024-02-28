@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
+import Navbar from "./Components/Navbar/Navbar";
+import SideBar from "./Components/SideBar";
 import Cards from "./Components/Cards";
+import { TablaVentas } from "./Components/AgregarVentas/TablaVentas";
 
 import Navbar from "./Components/Navbar.jsx";
 import Sidebar from "./Components/SideBar/Sidebar.jsx/index.js";
@@ -18,10 +21,14 @@ function App() {
 
   return (
     <>
-      <Navbar toggleSidebar={toggleSidebar}/>
-      <Sidebar showSidebar={showSidebar}  />
-      
-      <Cards />
+   {/*  <div className="flex">
+      <SideBar />
+      <Navbar />
+      <div className="flex-1 p-8">
+        <Cards />
+      </div>
+    </div> */}
+    <TablaVentas/>
     </>
   );
 }
