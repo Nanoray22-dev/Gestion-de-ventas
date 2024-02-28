@@ -1,5 +1,5 @@
-import React from "react";
 import "./App.css";
+
 import Navbar from "./Components/Navbar/Navbar";
 import SideBar from "./Components/SideBar";
 import Cards from "./Components/Cards";
@@ -17,6 +17,8 @@ function App() {
     </div> */}
     <TablaVentas/>
     </>
+
+
   );
 }
 
