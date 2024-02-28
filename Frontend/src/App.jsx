@@ -1,14 +1,19 @@
 import "./App.css";
-import Navbar from "./Components/Navbar";
-import Cards from "./Components/Dashboard/Cards";
+import { Navbar } from "./Components/Navbar";
+import SideBar from "./Components/SideBar";
+import Cards from "./Components/Cards";
 
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Cards />
-    </>
+    <div className="flex">
+      <SideBar />
+      <div className="flex-1 p-8">
+        <Navbar />
+        <Cards />
+
+      </div>
+    </div>
   );
 }
 
