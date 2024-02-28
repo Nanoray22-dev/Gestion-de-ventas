@@ -1,4 +1,5 @@
 
+
 import './App.css'
 import { Navbar } from './Components/Navbar'
 
@@ -10,10 +11,9 @@ import UsersList from './Components/Gestion_usuarios/UsersList'
 
 
 function App() {
-
-
   return (
     <>
+
 
       <Navbar/>
 
@@ -24,7 +24,6 @@ function App() {
       <UsersList/>
 
     </>
-  )
+  );
 }
-
-export default App
+export default App;
