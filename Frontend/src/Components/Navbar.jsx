@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { TextNavbar } from "./TextNavbar";
+import SideBar from "./SideBar";
+
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
+  };
+
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
   };
 
   return (
@@ -13,7 +20,9 @@ const Navbar = () => {
       <nav className="bg-slate-100 p-[15px] text-gray-500 shadow-lg shadow-gray-300">
         <ul className="flex items-center justify-between">
           <div className="rounded-[5px] hover:transition hover:duration-700 hover:ease-in-out bg-slate-200">
-            <TextNavbar spanIcon="menu" text="" />
+            <button onClick={toggleSidebar} className="p-2">
+              <TextNavbar spanIcon="menu" text="" />
+            </button>
           </div>
           <div>
             <img src="" alt="" />
@@ -36,6 +45,7 @@ const Navbar = () => {
           </div>
         </ul>
       </nav>
+      {showSidebar && <SideBar />}
     </>
   );
 };

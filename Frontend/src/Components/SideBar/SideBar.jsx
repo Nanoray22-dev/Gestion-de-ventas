@@ -19,7 +19,7 @@ const Sidebar = () => {
 };
 
 // DashboardLink.js
-import React from "react";
+
 
 const DashboardLink = () => {
   return (
@@ -72,3 +72,5 @@ const UsersLink = () => {
     </div>
   );
 };
+
+export default Sidebar;

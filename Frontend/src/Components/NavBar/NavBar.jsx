@@ -1,48 +1,48 @@
-// LanguageSelector.js
-import React from "react";
+// // LanguageSelector.js
+// import React from "react";
 
-const LanguageSelector = () => {
-  return (
-    <div>
-      <select>
-        <option value="es">Español</option>
-        <option value="en">English</option>
-      </select>
-    </div>
-  );
-};
+// const LanguageSelector = () => {
+//   return (
+//     <div>
+//       <select>
+//         <option value="es">Español</option>
+//         <option value="en">English</option>
+//       </select>
+//     </div>
+//   );
+// };
 
-// HelpLink.js
-import React from "react";
+// // HelpLink.js
 
-const HelpLink = () => {
-  return (
-    <div>
-      <a href="/help">Ayuda</a>
-    </div>
-  );
-};
 
-// AdminSelector.js
-import React from "react";
+// const HelpLink = () => {
+//   return (
+//     <div>
+//       <a href="/help">Ayuda</a>
+//     </div>
+//   );
+// };
 
-const AdminSelector = () => {
-  return (
-    <div>
-      <select>
-        <option value="admin">Admin</option>
-      </select>
-    </div>
-  );
-};
+// // AdminSelector.js
+// import React from "react";
 
-// LogoutButton.js
-import React from "react";
+// const AdminSelector = () => {
+//   return (
+//     <div>
+//       <select>
+//         <option value="admin">Admin</option>
+//       </select>
+//     </div>
+//   );
+// };
 
-const LogoutButton = () => {
-  return (
-    <div>
-      <button>Cerrar Sesión</button>
-    </div>
-  );
-};
+// // LogoutButton.js
+// import React from "react";
+
+// const LogoutButton = () => {
+//   return (
+//     <div>
+//       <button>Cerrar Sesión</button>
+//     </div>
+//   );
+// };
