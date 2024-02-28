@@ -2,12 +2,12 @@ import  { useEffect, useState } from "react";
 import axios from "axios";
 
 import AddUserModal from "./AddUserModal";
-// import EditUserModal from "./EditUserModal";
+import EditUserModal from "./EditUserModal";
 import { Menu } from "@headlessui/react";
-<<<<<<< HEAD
+
 import ColumnVisibilityDropdown from "./ColumnVisibilityDropdown";
-=======
->>>>>>> 534b797a0e38eb07f3dc996c7f24310e4efc8b7d
+
+
 
 function UsersList() {
   const [users, setUsers] = useState([]);
@@ -46,14 +46,10 @@ function UsersList() {
 
   const addUser = async (userData) => {
     try {
-<<<<<<< HEAD
       const response = await axios.post(
         "http://localhost:8000/api/users",
         userData
       );
-=======
-      const response = await axios.post("http://localhost:8000/api/users", userData);
->>>>>>> 534b797a0e38eb07f3dc996c7f24310e4efc8b7d
 
       if (!response.ok) {
         throw new Error("Error al agregar usuario");
@@ -75,7 +71,6 @@ function UsersList() {
 
   const handleEditUser = async (updatedUserData) => {
     try {
-<<<<<<< HEAD
       const response = await axios.put(
         `http://localhost:8000/api/users/${selectedUserId}`,
         updatedUserData
@@ -84,15 +79,6 @@ function UsersList() {
         throw new Error("Error al actualizar usuario");
       }
       console.log("Usuario actualizado correctamente");
-=======
-      const response = await axios.put(`http://localhost:8000/api/users/${userData.id}`, userData);
-
-      if (!response.ok) {
-        throw new Error("Error al editar usuario");
-      }
-
-      console.log("Usuario editado correctamente");
->>>>>>> 534b797a0e38eb07f3dc996c7f24310e4efc8b7d
       closeEditModal();
       fetchUsers(); // Actualizar lista de usuarios después de editar uno
     } catch (error) {
@@ -106,7 +92,6 @@ function UsersList() {
       console.log("Usuario eliminado correctamente");
       fetchUsers();
     } catch (error) {
-<<<<<<< HEAD
       console.error("Error al eliminar usuario:", error.message);
     }
   };
@@ -152,54 +137,6 @@ function UsersList() {
 
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         <div className="flex items-center mb-4 md:mb-0">
-=======
-      console.error("Error al editar usuario:", error.message);
-    }
-  };
-
-  const deletePerson = async (userId) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/users/${userId}`);
-      console.log("Usuario eliminado correctamente");
-      fetchUsers();
-    } catch (error) {
-      console.error("Error al eliminar usuario:", error.message);
-    }
-  };
-
-  const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const handlePerPageChange = (event) => {
-    setUsersPerPage(parseInt(event.target.value));
-    setCurrentPage(1);
-  };
-
-  return (
-    <div className="p-4">
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={openModal}
-      >
-        Agregar Usuario
-      </button>
-
-      <AddUserModal
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        addUser={addUser}
-      />
-
-      <div className="flex items-center justify-between py-4 px-8">
-        <div className="flex items-center">
->>>>>>> 534b797a0e38eb07f3dc996c7f24310e4efc8b7d
           <select
             id="usersPerPage"
             value={usersPerPage}
@@ -216,23 +153,17 @@ function UsersList() {
         </div>
 
         <div className="flex items-center space-x-2">
-<<<<<<< HEAD
           <label htmlFor="search" className="mr-2">
             Buscar:
           </label>
           <input
             id="search"
-=======
-          <label htmlFor="">Buscar:</label>
-          <input
->>>>>>> 534b797a0e38eb07f3dc996c7f24310e4efc8b7d
             type="text"
             placeholder="Buscar por nombre..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border rounded px-2 py-1"
           />
-<<<<<<< HEAD
           <div className="flex items-center">
             <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
               PDF
@@ -326,114 +257,6 @@ function UsersList() {
       </div>
 
       <ul className="pagination flex justify-center mt-4">
-=======
-
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            PDF
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            CSV
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            Impresión
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            Borrar
-          </button>
-
-          <div className="dropdown relative">
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-              Visibilidad por columna
-            </button>
-            <div className="dropdown-content absolute hidden bg-white rounded shadow-md mt-2">
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Nombre de Usuario
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Email
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Nombre de Empresa
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Número de Teléfono
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Papel
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Estado
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <table className="table-auto w-full">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Nombre de Usuario</th>
-            <th className="px-4 py-2">Email</th>
-            <th className="px-4 py-2">Nombre de Empresa</th>
-            <th className="px-4 py-2">Número de Teléfono</th>
-            <th className="px-4 py-2">Papel</th>
-            <th className="px-4 py-2">Estado</th>
-            <th className="px-4 py-2">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentUsers.map((user) => (
-            <tr key={user.id}>
-              <td className="border px-4 py-2">{user.username}</td>
-              <td className="border px-4 py-2">{user.email}</td>
-              <td className="border px-4 py-2">{user.empresa}</td>
-              <td className="border px-4 py-2">{user.telefono}</td>
-              <td className="border px-4 py-2">{user.role}</td>
-              <td className="border px-4 py-2">{user.status}</td>
-              <td className="border px-4 py-2">
-                <Menu>
-                  {({ open }) => (
-                    <>
-                      <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
-                        Acciones
-                      </Menu.Button>
-
-                      <Menu.Items
-                        className={`${
-                          open ? "block" : "hidden"
-                        } absolute z-10 right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 focus:outline-none`}
-                      >
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-100" : ""
-                              } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
-                              onClick={() => openEditModal(user.id)}
-                            >
-                              Editar
-                            </button>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700 w-full text-left`} onClick={() => deletePerson(user.id)}>
-                              Eliminar
-                            </button>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </>
-                  )}
-                </Menu>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <ul className="pagination flex p-4 py-4">
->>>>>>> 534b797a0e38eb07f3dc996c7f24310e4efc8b7d
         <li className="page-item">
           <a
             className="page-link  border border-gray-300 px-3 py-1 rounded-l"
