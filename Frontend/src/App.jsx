@@ -1,15 +1,28 @@
 
-import "./App.css";
-import Cards from "./Components/Cards";
-import UsersList from "./Components/Gestion_usuarios/UsersList.jsx";
+
+import './App.css'
+import { Navbar } from './Components/Navbar'
+
+import UsersList from './Components/Gestion_usuarios/UsersList'
+
+// import Cards from './Components/Cards'
+
 
 
 
 function App() {
   return (
     <>
-      <Cards />
-      <UsersList />
+
+
+      <Navbar/>
+
+
+    {/* <Cards /> */}
+      
+
+      <UsersList/>
+
     </>
   );
 }
