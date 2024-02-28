@@ -1,20 +1,13 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
 import AddUserModal from "./AddUserModal";
-
-
-
 import EditUserModal from "./EditUserModal";
-
-
-
-
-
 
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -25,9 +18,10 @@ function UsersList() {
       const response = await axios.get("http://localhost:8000/api/users");
       setUsers(response.data);
     } catch (error) {
-      console.log("Error fectching users", error);
+      console.log("Error fetching users", error);
     }
   };
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -35,55 +29,49 @@ function UsersList() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const addUser = async (userData) => {
-    //  enviar los datos del usuario al backend para su procesamiento
-    try {
-        const response = await fetch('http://localhost:8000/api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        });
-    
-        if (!response.ok) {
-          throw new Error('Error al agregar usuario');
-        }
-    
 
-        console.log('Usuario agregado correctamente');
-    
-        // Cerrar el modal después de agregar el usuario
-        closeModal();
-      } catch (error) {
-        console.error('Error al agregar usuario:', error.message);
-        // Puedes mostrar un mensaje de error al usuario si lo deseas
-      }
-
-    console.log('Usuario agregado:', userData);
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
+  const addUser = async (userData) => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/users', userData);
+      console.log('Usuario agregado correctamente');
+      closeModal();
+      fetchUsers();
+    } catch (error) {
+      console.error('Error al agregar usuario:', error.message);
+    }
+  };
+
+  const openEditModal = (userId) => {
+    setSelectedUserId(userId);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditUser = async (userData) => {
+    try {
+      const response = await axios.put(`http://localhost:8000/api/users/${userData.id}`, userData);
+      console.log('Usuario editado correctamente');
+      closeEditModal();
+      fetchUsers();
+    } catch (error) {
+      console.error('Error al editar usuario:', error.message);
+    }
+  };
+
+  const deleteUser = async (userId) => {
+    try {
+      const response = await axios.delete(`http://localhost:8000/api/users/${userId}`);
+      console.log('Usuario eliminado correctamente');
+      fetchUsers();
+    } catch (error) {
+      console.error('Error al eliminar usuario:', error.message);
+    }
+  };
 
   return (
-    <div>
-      <h2>Listado de Usuarios</h2>
-      <button onClick={openModal}>Agregar Usuario</button>
-      <AddUserModal
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        addUser={addUser}
-      />
-    {selectedUserId && (
-  <EditUserModal
-    isOpen={isEditModalOpen}
-    onClose={closeEditModal}
-    onSave={handleEditUser}
-    user={users.find(user => user.id === selectedUserId)}
-  />
-)}
-      <table>
-
-  return( 
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Listado de Usuarios</h2>
       <button
@@ -93,8 +81,15 @@ function UsersList() {
         Agregar Usuario
       </button>
       <AddUserModal isOpen={isModalOpen} closeModal={closeModal} addUser={addUser} />
+      {selectedUserId && (
+        <EditUserModal
+          isOpen={isEditModalOpen}
+          onClose={closeEditModal}
+          onSave={handleEditUser}
+          user={users.find(user => user.id === selectedUserId)}
+        />
+      )}
       <table className="table-auto w-full">
-
         <thead>
           <tr>
             <th className="px-4 py-2">Nombre de Usuario</th>
@@ -116,10 +111,16 @@ function UsersList() {
               <td className="border px-4 py-2">{user.role}</td>
               <td className="border px-4 py-2">{user.status}</td>
               <td className="border px-4 py-2">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                  onClick={() => openEditModal(user.id)}
+                >
                   Edit
                 </button>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                  onClick={() => deleteUser(user.id)}
+                >
                   Delete
                 </button>
               </td>
