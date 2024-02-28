@@ -5,10 +5,10 @@ import { Botones } from "./Botones";
 export const TablaVentas = () => {
   return (
     <>
-      <div className=" w-[50%] rounded-[5px] m-2">
+      <div className=" w-[50%] rounded-[5px] m-2 ">
        <div className="flex justify-between p-2">
        <div className="">
-          <select className="w-[200px] h-[35px] rounded-[5px] p-1 border border-gray-300 text-gray-400 bg-slate-100">
+          <select className="w-[200px] h-[35px] rounded-[5px] p-1 border border-gray-300 text-gray-400 bg-slate-100 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
             <option disabled selected>
               ALMACEN POZITOS
             </option>
@@ -17,7 +17,7 @@ export const TablaVentas = () => {
           </select>
         </div>
         <div>
-          <select className="w-[200px] h-[35px] rounded-[5px] p-1 border border-gray-300 text-gray-400 bg-slate-100">
+        <select className="w-[200px] h-[35px] rounded-[5px] p-1 border border-gray-300 text-gray-400 bg-slate-100 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
             <option disabled selected>
               Poziyos (La Tejona)
             </option>
@@ -26,7 +26,7 @@ export const TablaVentas = () => {
           </select>
         </div>
         <div>
-          <select className="w-[200px] h-[35px] rounded-[5px] p-1 border border-gray-300 text-gray-400 bg-slate-100">
+        <select className="w-[200px] h-[35px] rounded-[5px] p-1 border border-gray-300 text-gray-400 bg-slate-100 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
             <option disabled selected>
              Clientes Varios
             </option>
@@ -36,10 +36,11 @@ export const TablaVentas = () => {
         </div>
 
        </div>
-       <input type="text" placeholder="Buscar/Escanear por Nombre/Código" className="border border-gray-300 focus:outline-none w-[97.5%] h-[35px] px-3 mx-2 rounded-[5px]  bg-slate-100"/>
-
-        <table className="w-[full] ">
-          <thead>
+       <input type="text" placeholder="Buscar/Escanear por Nombre/Código" className="border border-gray-300 focus:outline-none w-[97.5%] h-[35px] px-3 mx-2 rounded-[5px]  bg-slate-100 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 hover:placeholder:text-white"/>
+        
+        <div className="overflow-x-auto max-h-[250px]  m-3 mb-5 ">
+        <table className="w-full p-[10px] ">
+          <thead className="text-gray-600 text-[18px]">
             <tr>
               <th className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Producto</th>
               <th className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Precio</th>
@@ -50,12 +51,72 @@ export const TablaVentas = () => {
 
           <tbody className="text-center">
            
+<<<<<<< HEAD
+=======
             <tr>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
             </tr>
+            <tr>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+            </tr>
+
+            <tr>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+            </tr>
+
+            <tr>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+            </tr>
+
+>>>>>>> d148e5a (tabla de ventas y botones terminados)
+            <tr>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+            </tr>
+
+            <tr>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+            </tr>
+
+            <tr>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+            </tr>
+
+            <tr>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+            </tr>
+
+            <tr>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
+            </tr>
+
+<<<<<<< HEAD
             <tr>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
@@ -98,35 +159,25 @@ export const TablaVentas = () => {
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
             </tr>
 
-            <tr>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-            </tr>
-
-            <tr>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-            </tr>
-
+=======
+>>>>>>> d148e5a (tabla de ventas y botones terminados)
           </tbody>
         </table>
-        <div className="flex justify-around p-[10px]">
+        </div>
+
+        <div className="flex justify-around p-[10px] border-t-[2px]  border-b-gray-500 ">
         <Cantidad descripcion="Artículos" cantidad="0,00" />
         <Cantidad descripcion="Total Bruto" cantidad="0,00" />
-        <Cantidad descripcion="Propinas" cantidad="0,00" />
+        <Cantidad descripcion="Propinas" cantidad="0,00" iconText="edit_square"/>
         </div>
         <div className="flex item-center justify-around p-[10px]">
 
-        <Cantidad descripcion="Descuento" cantidad="0,00" />
-        <Cantidad descripcion="Cupón" cantidad="0,00" />
-        <Cantidad descripcion="Impuesto" cantidad="0,00" />
-        <Cantidad descripcion="Envío" cantidad="0,00" />
+        <Cantidad descripcion="Descuento" cantidad="0,00" iconText="edit_square" />
+        <Cantidad descripcion="Cupón" cantidad="0,00" iconText="edit_square" />
+        <Cantidad descripcion="Impuesto" cantidad="0,00" iconText="edit_square" />
+        <Cantidad descripcion="Envío" cantidad="0,00" iconText="edit_square" />
         </div>
-        <h2 className=" p-[10px] flex justify-center text-[25px] text-gray-400 bg-slate-100">TOTAL 0.00</h2>
+        <h2 className=" p-[10px] flex justify-center text-[25px] text-gray-700 bg-slate-200 my-5 mb-7 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">TOTAL 0.00</h2>
         
       </div>
         <Botones iconText="payments" text="Efectivo" />
