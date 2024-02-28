@@ -1,16 +1,18 @@
 import "./App.css";
-import SideBar from "./Components/SideBar";
-import Cards from "./Components/Cards";
+// import SideBar from "./Components/SideBar";
+// import Cards from "./Components/Dashboard/Cards";
+import UsersList from "./Components/Gestion_usuarios/UsersList";
 
 
 function App() {
   return (
-    <div className="flex">
-      <SideBar />
-      <div className="flex-1 p-8">
-        <Cards />
-      </div>
-    </div>
+    <UsersList/>
+    // <div className="flex">
+    //   <SideBar />
+    //   <div className="flex-1 p-8">
+    //     <Cards />
+    //   </div>
+    // </div>
   );
 }
 
