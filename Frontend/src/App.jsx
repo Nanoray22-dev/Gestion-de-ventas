@@ -1,18 +1,24 @@
 import "./App.css";
-// import SideBar from "./Components/SideBar";
-// import Cards from "./Components/Dashboard/Cards";
-import UsersList from "./Components/Gestion_usuarios/UsersList";
 
+import Navbar from "./Components/Navbar/Navbar";
+import SideBar from "./Components/SideBar";
+import Cards from "./Components/Cards";
+import { TablaVentas } from "./Components/AgregarVentas/TablaVentas";
 
 function App() {
   return (
-    <UsersList/>
-    // <div className="flex">
-    //   <SideBar />
-    //   <div className="flex-1 p-8">
-    //     <Cards />
-    //   </div>
-    // </div>
+    <>
+   {/*  <div className="flex">
+      <SideBar />
+      <Navbar />
+      <div className="flex-1 p-8">
+        <Cards />
+      </div>
+    </div> */}
+    <TablaVentas/>
+    </>
+
+
   );
 }
 
