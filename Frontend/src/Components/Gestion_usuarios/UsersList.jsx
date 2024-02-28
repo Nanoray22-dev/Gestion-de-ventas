@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
+import { Menu } from '@headlessui/react';
 
 function UsersList() {
   const [users, setUsers] = useState([]);
@@ -111,18 +112,38 @@ function UsersList() {
               <td className="border px-4 py-2">{user.role}</td>
               <td className="border px-4 py-2">{user.status}</td>
               <td className="border px-4 py-2">
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
-                  onClick={() => openEditModal(user.id)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                  onClick={() => deleteUser(user.id)}
-                >
-                  Delete
-                </button>
+                <Menu>
+                  {({ open }) => (
+                    <>
+                      <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
+                        Acciones
+                      </Menu.Button>
+
+                      <Menu.Items className={`${open ? 'block' : 'hidden'} absolute z-10 right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 focus:outline-none`}>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                              onClick={() => openEditModal(user.id)}
+                            >
+                              Editar
+                            </button>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                              onClick={() => deleteUser(user.id)}
+                            >
+                              Eliminar
+                            </button>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </>
+                  )}
+                </Menu>
               </td>
             </tr>
           ))}
