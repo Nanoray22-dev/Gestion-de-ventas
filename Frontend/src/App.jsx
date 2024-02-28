@@ -4,7 +4,7 @@ import { Navbar } from './Components/Navbar'
 
 import UsersList from './Components/Gestion_usuarios/UsersList'
 
-import Cards from './Components/Cards'
+// import Cards from './Components/Cards'
 
 
 
@@ -18,7 +18,7 @@ function App() {
       <Navbar/>
 
 
-    <Cards />
+    {/* <Cards /> */}
       
 
       <UsersList/>
