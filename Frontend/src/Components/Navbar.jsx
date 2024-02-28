@@ -23,12 +23,20 @@ const Navbar = () => {
             <TextNavbar spanIcon="language" text="Idioma" />
             <TextNavbar spanIcon="info" text="Ayuda" />
             <div className="relative">
-              <TextNavbar spanIcon="person" text="Admin" onClick={toggleDropdown} />
+              <TextNavbar
+                spanIcon="person"
+                text="Admin"
+                onClick={toggleDropdown}
+              />
               {showDropdown && (
                 <div className="absolute right-0 mt-1 bg-white border border-gray-200 shadow-md rounded-md">
                   <ul>
-                    <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer">Administrar Usuarios</li>
-                    <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer">Configuración</li>
+                    <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer">
+                      Administrar Usuarios
+                    </li>
+                    <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer">
+                      Configuración
+                    </li>
                   </ul>
                 </div>
               )}
