@@ -31,6 +31,20 @@ function EditUserModal({ isOpen, user, onSave, onClose }) {
       isOpen={isOpen}
       onRequestClose={onClose}
       contentLabel="Editar Usuario"
+      style={{
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "600px",
+        },
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        },
+      }}
     >
       <div>
         <h2 className="text-2xl font-bold mb-4 text-center">Editar Usuario</h2>

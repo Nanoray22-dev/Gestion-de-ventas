@@ -2,8 +2,12 @@ import  { useEffect, useState } from "react";
 import axios from "axios";
 
 import AddUserModal from "./AddUserModal";
-// import EditUserModal from "./EditUserModal";
+import EditUserModal from "./EditUserModal";
 import { Menu } from "@headlessui/react";
+
+import ColumnVisibilityDropdown from "./ColumnVisibilityDropdown";
+
+
 
 function UsersList() {
   const [users, setUsers] = useState([]);
@@ -42,7 +46,10 @@ function UsersList() {
 
   const addUser = async (userData) => {
     try {
-      const response = await axios.post("http://localhost:8000/api/users", userData);
+      const response = await axios.post(
+        "http://localhost:8000/api/users",
+        userData
+      );
 
       if (!response.ok) {
         throw new Error("Error al agregar usuario");
@@ -62,19 +69,20 @@ function UsersList() {
     setIsEditModalOpen(true);
   };
 
-  const handleEditUser = async (userData) => {
+  const handleEditUser = async (updatedUserData) => {
     try {
-      const response = await axios.put(`http://localhost:8000/api/users/${userData.id}`, userData);
-
+      const response = await axios.put(
+        `http://localhost:8000/api/users/${selectedUserId}`,
+        updatedUserData
+      );
       if (!response.ok) {
-        throw new Error("Error al editar usuario");
+        throw new Error("Error al actualizar usuario");
       }
-
-      console.log("Usuario editado correctamente");
+      console.log("Usuario actualizado correctamente");
       closeEditModal();
-      fetchUsers();
+      fetchUsers(); // Actualizar lista de usuarios después de editar uno
     } catch (error) {
-      console.error("Error al editar usuario:", error.message);
+      console.error("Error al actualizar usuario:", error.message);
     }
   };
 
@@ -106,7 +114,7 @@ function UsersList() {
   return (
     <div className="p-4">
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
         onClick={openModal}
       >
         Agregar Usuario
@@ -118,8 +126,17 @@ function UsersList() {
         addUser={addUser}
       />
 
-      <div className="flex items-center justify-between py-4 px-8">
-        <div className="flex items-center">
+      {selectedUserId && (
+        <EditUserModal
+          isOpen={isEditModalOpen}
+          onClose={closeEditModal}
+          onSave={handleEditUser}
+          user={users.find((user) => user.id === selectedUserId)}
+        />
+      )}
+
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+        <div className="flex items-center mb-4 md:mb-0">
           <select
             id="usersPerPage"
             value={usersPerPage}
@@ -136,120 +153,110 @@ function UsersList() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <label htmlFor="">Buscar:</label>
+          <label htmlFor="search" className="mr-2">
+            Buscar:
+          </label>
           <input
+            id="search"
             type="text"
             placeholder="Buscar por nombre..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border rounded px-2 py-1"
           />
-
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            PDF
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            CSV
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            Impresión
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            Borrar
-          </button>
-
-          <div className="dropdown relative">
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-              Visibilidad por columna
+          <div className="flex items-center">
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+              PDF
             </button>
-            <div className="dropdown-content absolute hidden bg-white rounded shadow-md mt-2">
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Nombre de Usuario
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Email
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Nombre de Empresa
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Número de Teléfono
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Papel
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Estado
-              </label>
-            </div>
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+              CSV
+            </button>
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+              Impresión
+            </button>
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
+              Borrar
+            </button>
+            {/*  */}
+
+            <ColumnVisibilityDropdown/>
+           
+          {/*  */}
           </div>
         </div>
       </div>
 
-      <table className="table-auto w-full">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Nombre de Usuario</th>
-            <th className="px-4 py-2">Email</th>
-            <th className="px-4 py-2">Nombre de Empresa</th>
-            <th className="px-4 py-2">Número de Teléfono</th>
-            <th className="px-4 py-2">Papel</th>
-            <th className="px-4 py-2">Estado</th>
-            <th className="px-4 py-2">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentUsers.map((user) => (
-            <tr key={user.id}>
-              <td className="border px-4 py-2">{user.username}</td>
-              <td className="border px-4 py-2">{user.email}</td>
-              <td className="border px-4 py-2">{user.empresa}</td>
-              <td className="border px-4 py-2">{user.telefono}</td>
-              <td className="border px-4 py-2">{user.role}</td>
-              <td className="border px-4 py-2">{user.status}</td>
-              <td className="border px-4 py-2">
-                <Menu>
-                  {({ open }) => (
-                    <>
-                      <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
-                        Acciones
-                      </Menu.Button>
-
-                      <Menu.Items
-                        className={`${
-                          open ? "block" : "hidden"
-                        } absolute z-10 right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 focus:outline-none`}
-                      >
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-100" : ""
-                              } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
-                              onClick={() => openEditModal(user.id)}
-                            >
-                              Editar
-                            </button>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700 w-full text-left`} onClick={() => deletePerson(user.id)}>
-                              Eliminar
-                            </button>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </>
-                  )}
-                </Menu>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Nombre de Usuario</th>
+              <th className="px-4 py-2">Email</th>
+              <th className="px-4 py-2">Nombre de Empresa</th>
+              <th className="px-4 py-2">Número de Teléfono</th>
+              <th className="px-4 py-2">Papel</th>
+              <th className="px-4 py-2">Estado</th>
+              <th className="px-4 py-2">Acción</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentUsers.map((user) => (
+              <tr key={user.id}>
+                <td className="border px-4 py-2">{user.username}</td>
+                <td className="border px-4 py-2">{user.email}</td>
+                <td className="border px-4 py-2">{user.empresa}</td>
+                <td className="border px-4 py-2">{user.telefono}</td>
+                <td className="border px-4 py-2">{user.role}</td>
+                <td className="border px-4 py-2">{user.status}</td>
+                <td className="border px-4 py-2">
+                  <Menu>
+                    {({ open }) => (
+                      <>
+                        <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
+                          Acciones
+                        </Menu.Button>
 
-      <ul className="pagination flex p-4 py-4">
+                        <Menu.Items
+                          className={`${
+                            open ? "block" : "hidden"
+                          } absolute z-10 right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 focus:outline-none`}
+                        >
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active ? "bg-gray-100" : ""
+                                } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                                onClick={() => openEditModal(user.id)}
+                              >
+                                Editar
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active ? "bg-gray-100" : ""
+                                } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                                onClick={() => deletePerson(user.id)}
+                              >
+                                Eliminar
+                              </button>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </>
+                    )}
+                  </Menu>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <ul className="pagination flex justify-center mt-4">
         <li className="page-item">
           <a
             className="page-link  border border-gray-300 px-3 py-1 rounded-l"
