@@ -1,6 +1,6 @@
 import "./App.css";
 
-import UsersList from "./Components/Gestion_usuarios/UsersList";
+
 
 import Cards from "./Components/Cards";
 import { Navbar } from "./Components/Navbar/Navbar";
@@ -11,9 +11,20 @@ function App() {
     <>
       {/* <Navbar/> */}
 
+
      {/*  <Cards />
 
-      <UsersList /> */}
+
+      <Navbar/>
+
+
+    {/* <Cards /> */}
+      
+
+      <UsersList/>
+
+
+      <UsersList /> */
       <TablaVentas/>
     </>
   );
