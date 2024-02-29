@@ -6,6 +6,9 @@ import Navbar from "./Components/Navbar.jsx";
 import Sidebar from "./Components/Sidebar.jsx";
 
 
+import Navbar from "./Components/Navbar/Navbar";
+import Cards from "./Components/Cards";
+import { TablaVentas } from "./Components/AgregarVentas/TablaVentas";
 
 function App() {
 
@@ -23,6 +26,9 @@ function App() {
       
       <Cards />
     </>
+
+
   );
 }
+
 export default App;

@@ -1,16 +1,16 @@
-import  { useState } from 'react';
-import Modal from 'react-modal';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import Modal from "react-modal";
+import PropTypes from "prop-types";
 
 const AddUserModal = ({ isOpen, closeModal, addUser }) => {
   const [userData, setUserData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    empresa: '',
-    telefono: '',
-    role: '',
-    status: '',
+    username: "",
+    email: "",
+    password: "",
+    empresa: "",
+    telefono: "",
+    role: "",
+    status: "",
   });
 
   const handleChange = (e) => {
@@ -29,14 +29,30 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
       isOpen={isOpen}
       onRequestClose={closeModal}
       contentLabel="Agregar Usuario"
+      style={{
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "600px",
+        },
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        },
+      }}
     >
-
       <h2 className="text-2xl font-bold mb-4 text-center">Agregar Usuario</h2>
       <div className="p-4">
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
           <div className="grid grid-cols-2 gap-4">
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="username"
+              >
                 Nombre de Usuario:
               </label>
               <input
@@ -48,7 +64,10 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email"
+              >
                 Email:
               </label>
               <input
@@ -60,7 +79,10 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="password"
+              >
                 Contraseña:
               </label>
               <input
@@ -72,7 +94,10 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="empresa">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="empresa"
+              >
                 Nombre de Empresa:
               </label>
               <input
@@ -84,7 +109,10 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telefono">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="telefono"
+              >
                 Número de Teléfono:
               </label>
               <input
@@ -96,7 +124,10 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="role"
+              >
                 Papel:
               </label>
               <input
@@ -108,7 +139,10 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="status">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="status"
+              >
                 Estado:
               </label>
               <input
@@ -143,13 +177,8 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
 
 export default AddUserModal;
 
-
-
-
-
-
 AddUserModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    addUser: PropTypes.func.isRequired,
-  };
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  addUser: PropTypes.func.isRequired,
+};
