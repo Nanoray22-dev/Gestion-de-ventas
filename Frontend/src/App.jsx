@@ -1,18 +1,28 @@
+import { useState } from "react";
 import "./App.css";
-// import SideBar from "./Components/SideBar";
-// import Cards from "./Components/Dashboard/Cards";
-import UsersList from "./Components/Gestion_usuarios/UsersList";
+import Cards from "./Components/Cards";
+
+import Navbar from "./Components/Navbar.jsx";
+import Sidebar from "./Components/SideBar/Sidebar.jsx/index.js";
+
 
 
 function App() {
+
+  const [showSidebar, setShowSidebar] = useState(false);
+  const toggleSidebar = (e) => {
+    e.preventDefault();
+    setShowSidebar(!showSidebar);
+  };
+
+
   return (
-    <UsersList/>
-    // <div className="flex">
-    //   <SideBar />
-    //   <div className="flex-1 p-8">
-    //     <Cards />
-    //   </div>
-    // </div>
+    <>
+      <Navbar toggleSidebar={toggleSidebar}/>
+      <Sidebar showSidebar={showSidebar}  />
+      
+      <Cards />
+    </>
   );
 }
 

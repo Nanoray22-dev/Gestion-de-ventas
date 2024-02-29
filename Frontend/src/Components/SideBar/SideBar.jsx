@@ -1,74 +1,48 @@
 // Sidebar.js
-import React from "react";
-import DashboardLink from "./DashboardLink";
-import InventoryLink from "./InventoryLink";
-import SalesLink from "./SalesLink";
-import PurchasesLink from "./PurchasesLink";
-import UsersLink from "./UsersLink";
 
-const Sidebar = () => {
+import React from 'react';
+import { HomeIcon, ShoppingBagIcon, ShoppingCartIcon, CashIcon, ChartBarIcon, CurrencyDollarIcon } from '@heroicons/react/outline';
+
+const Sidebar = ({showSidebar}) => {
   return (
-    <div>
-      <DashboardLink />
-      <InventoryLink />
-      <SalesLink />
-      <PurchasesLink />
-      <UsersLink />
-    </div>
-  );
-};
-
-// DashboardLink.js
-
-
-const DashboardLink = () => {
-  return (
-    <div>
-      <a href="/dashboard">Dashboard</a>
-    </div>
-  );
-};
-
-// InventoryLink.js
-import React from "react";
-
-const InventoryLink = () => {
-  return (
-    <div>
-      <a href="/inventory">Inventario</a>
-    </div>
-  );
-};
-
-// SalesLink.js
-import React from "react";
-
-const SalesLink = () => {
-  return (
-    <div>
-      <a href="/sales">Ventas</a>
-    </div>
-  );
-};
-
-// PurchasesLink.js
-import React from "react";
-
-const PurchasesLink = () => {
-  return (
-    <div>
-      <a href="/purchases">Compras</a>
-    </div>
-  );
-};
-
-// UsersLink.js
-import React from "react";
-
-const UsersLink = () => {
-  return (
-    <div>
-      <a href="/users">Usuarios</a>
+    <div className={`bg-gray-200 w-64 p-4 h-screen absolute ${showSidebar ? 'top-0':'top-[-1050px]'} transition-all duration-500`}>
+    
+      <h2 className="mt-20 text-xl font-bold mb-4 flex items-center">
+        <ChartBarIcon className="w-6 h-6 mr-2" />
+        Tablero
+      </h2>
+      <ul>
+        <li>
+          <a href="#" className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300">
+            <HomeIcon className="w-6 h-6 mr-2" />
+            Inicio
+          </a>
+        </li>
+        <li>
+          <a href="#" className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300">
+            <ShoppingBagIcon className="w-6 h-6 mr-2" />
+            Producto
+          </a>
+        </li>
+        <li>
+          <a href="#" className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300">
+            <ShoppingCartIcon className="w-6 h-6 mr-2" />
+            Compra
+          </a>
+        </li>
+        <li>
+          <a href="#" className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300">
+            <CashIcon className="w-6 h-6 mr-2" />
+            Venta
+          </a>
+        </li>
+        <li>
+          <a href="#" className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300">
+            <CurrencyDollarIcon className="w-6 h-6 mr-2" />
+            Gasto
+          </a>
+        </li>
+      </ul>
     </div>
   );
 };
