@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./App.css";
-import Cards from "./Components/Cards";
+import Cards from "./Components/Dashboard/Cards.jsx";
 import UsersList from "./Components/Gestion_usuarios/UsersList.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import Sidebar from "./Components/Sidebar.jsx";
 
 
-import Navbar from "./Components/Navbar/Navbar";
-import Cards from "./Components/Cards";
+
+
 import { TablaVentas } from "./Components/AgregarVentas/TablaVentas";
 
 function App() {
@@ -22,8 +22,7 @@ function App() {
   return (
     <>
       <Navbar toggleSidebar={toggleSidebar}/>
-      <Sidebar showSidebar={showSidebar}  />
-      
+      <Sidebar showSidebar={showSidebar}  />      
       <Cards />
     </>
 
