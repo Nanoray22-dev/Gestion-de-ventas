@@ -3,12 +3,12 @@ import "./App.css";
 import Cards from "./Components/Dashboard/Cards.jsx";
 import UsersList from "./Components/Gestion_usuarios/UsersList.jsx";
 import Navbar from "./Components/Navbar.jsx";
-import Sidebar from "./Components/SideBar/Sidebar.jsx/index.js";
 
 
 
 
 import { TablaVentas } from "./Components/AgregarVentas/TablaVentas";
+import Sidebar from "./Components/Dashboard/Sidebar.jsx";
 
 function App() {
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextNavbar } from "./TextNavbar";
-
+import Sidebar from "./Dashboard/Sidebar";
 
 const Navbar = ({toggleSidebar}) => {
   const [showDropdown, setShowDropdown] = useState(false);
