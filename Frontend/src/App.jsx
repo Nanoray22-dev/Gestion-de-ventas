@@ -1,14 +1,25 @@
+import { useState } from "react";
 import "./App.css";
+import Cards from "./Components/Dashboard/Cards.jsx";
+import UsersList from "./Components/Gestion_usuarios/UsersList.jsx";
+import Navbar from "./Components/Navbar.jsx";
 
-import Navbar from "./Components/Navbar/Navbar";
-import SideBar from "./Components/SideBar";
-/* import Cards from "./Components/Cards"; */
-import { TablaVentas } from "./Components/AgregarVentas/TablaVentas";
-import { TablaListarCompras } from "./Components/ListarCompras/TablaListarCompras";
+
+
+
 
 function App() {
+
+  const [showSidebar, setShowSidebar] = useState(false);
+  const toggleSidebar = (e) => {
+    e.preventDefault();
+    setShowSidebar(!showSidebar);
+  };
+
+
   return (
     <>
+
     <div className="flex">
       {/* <SideBar />
       <Navbar /> */}
@@ -19,6 +30,11 @@ function App() {
     {/* <TablaVentas/> */}
     <TablaListarCompras/>
  
+
+      <Navbar toggleSidebar={toggleSidebar}/>
+      <Sidebar showSidebar={showSidebar}  />      
+      <Cards />
+
     </>
 
 
