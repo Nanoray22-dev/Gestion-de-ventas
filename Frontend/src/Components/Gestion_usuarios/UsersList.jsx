@@ -6,7 +6,7 @@ import AddUserModal from "./AddUserModal";
 import { Menu } from "@headlessui/react";
 
 function UsersList() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);/*  */
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
