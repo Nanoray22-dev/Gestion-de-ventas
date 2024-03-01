@@ -1,16 +1,16 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
 import { Menu } from "@headlessui/react";
 
 import ColumnVisibilityDropdown from "./ColumnVisibilityDropdown";
 
-
-
 function UsersList() {
   const [users, setUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -46,16 +46,32 @@ function UsersList() {
 
   const addUser = async (userData) => {
     try {
+      // Verificar si el nombre de usuario ya existe
+      const existingUser = users.find((user) => user.username === userData.username);
+      if (existingUser) {
+        // Mostrar SweetAlert de error
+        Swal.fire({
+          title: "Error",
+          text: "este usuario ya existe.",
+          icon: "error",
+        });
+        return;
+      }
+
+      // Si el nombre de usuario no existe, agregar el usuario
       const response = await axios.post(
         "http://localhost:8000/api/users",
         userData
       );
 
-      if (!response.ok) {
-        throw new Error("Error al agregar usuario");
+      if (response.status === 201) {
+        // Mostrar SweetAlert de éxito
+        Swal.fire({
+          title: "¡Usuario agregado!",
+          text: "El usuario se ha agregado correctamente.",
+          icon: "success",
+        });
       }
-
-      console.log("Usuario agregado correctamente");
 
       closeModal();
       fetchUsers();
@@ -75,10 +91,13 @@ function UsersList() {
         `http://localhost:8000/api/users/${selectedUserId}`,
         updatedUserData
       );
-      if (!response.ok) {
-        throw new Error("Error al actualizar usuario");
+      if (response.status === 200) {
+        Swal.fire({
+          title: "¡Usuario modificado!",
+          text: "Usuario actualizado exitosamente.",
+          icon: "success",
+        });
       }
-      console.log("Usuario actualizado correctamente");
       closeEditModal();
       fetchUsers(); // Actualizar lista de usuarios después de editar uno
     } catch (error) {
@@ -86,14 +105,33 @@ function UsersList() {
     }
   };
 
-  const deletePerson = async (userId) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/users/${userId}`);
-      console.log("Usuario eliminado correctamente");
+  const deletePerson = async () => {
+
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Una vez eliminado, no podrás recuperar este usuario.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrar",
+      cancelButtonText: "Cancelar",
+    });
+    if (result.isConfirmed){
+      try {
+      await Promise.all(
+        selectedUsers.map((userId) =>
+          axios.delete(`http://localhost:8000/api/users/${userId}`)
+        )
+      );
+      console.log("Usuarios eliminados correctamente");
       fetchUsers();
+      setSelectedUsers([]);
     } catch (error) {
-      console.error("Error al eliminar usuario:", error.message);
+      console.error("Error al eliminar usuarios:", error.message);
     }
+    }
+    
   };
 
   const filteredUsers = users.filter((user) =>
@@ -111,8 +149,45 @@ function UsersList() {
     setCurrentPage(1);
   };
 
+  const handleUserSelection = (userId) => {
+    const isSelected = selectedUsers.includes(userId);
+    if (isSelected) {
+      setSelectedUsers(selectedUsers.filter((id) => id !== userId));
+    } else {
+      setSelectedUsers([...selectedUsers, userId]);
+    }
+  };
+
+  const handleSelectAll = (event) => {
+    const checked = event.target.checked;
+    setSelectAll(checked);
+    // Actualizar el estado de cada checkbox individual
+    const updatedUsers = users.map((user) => ({
+      ...user,
+      selected: checked,
+    }));
+    setUsers(updatedUsers);
+    const allSelected = updatedUsers.every((user) => user.selected);
+    setSelectAll(allSelected);
+  };
+
+  const imprimirSelectedUsers = () => {
+    // Obtener los detalles de los usuarios seleccionados
+    const selectedUsersDetails = users.filter((user) =>
+      selectedUsers.includes(user.id)
+    );
+
+    console.log("Imprimiendo usuarios seleccionados:", selectedUsersDetails);
+
+    Swal.fire({
+      title: "¡Imprimiendo!",
+      text: "¡se ha imprimido correctamente!",
+      icon: "success",
+    });
+  };
+
   return (
-    <div className="p-4">
+    <div className="p-4 pt-28">
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
         onClick={openModal}
@@ -171,25 +246,41 @@ function UsersList() {
             <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
               CSV
             </button>
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+            <button
+              onClick={imprimirSelectedUsers}
+              disabled={selectedUsers.length === 0}
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2"
+            >
               Impresión
             </button>
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
+            <button
+              onClick={deletePerson}
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2"
+            >
               Borrar
             </button>
             {/*  */}
 
-            <ColumnVisibilityDropdown/>
-           
-          {/*  */}
+            <ColumnVisibilityDropdown />
+
+            {/*  */}
           </div>
         </div>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="table-auto w-full">
+        <table className="table-auto w-full bg-slate-100 rounded-md">
           <thead>
             <tr>
+              <th className="px-4 py-2">
+                {" "}
+                <input
+                  type="checkbox"
+                  checked={selectAll}
+                  onChange={handleSelectAll}
+                 
+                />
+              </th>
               <th className="px-4 py-2">Nombre de Usuario</th>
               <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Nombre de Empresa</th>
@@ -202,12 +293,23 @@ function UsersList() {
           <tbody>
             {currentUsers.map((user) => (
               <tr key={user.id}>
+                <td className="border px-4 py-2">
+                  <input
+                    type="checkbox"
+                    checked={user.selected}
+                    onChange={() => handleUserSelection(user.id)}
+                  />
+                </td>
+
                 <td className="border px-4 py-2">{user.username}</td>
                 <td className="border px-4 py-2">{user.email}</td>
                 <td className="border px-4 py-2">{user.empresa}</td>
                 <td className="border px-4 py-2">{user.telefono}</td>
                 <td className="border px-4 py-2">{user.role}</td>
-                <td className="border px-4 py-2">{user.status}</td>
+                <td className={`border px-4 py-2`}>
+                <span className={`inline-block bg-gray-200 rounded px-2 py-1 border border-gray-300 ${user.status === 'active' ? 'bg-green-300' : 'bg-red-300'} `}>{user.status}</span>
+                 
+                  </td>
                 <td className="border px-4 py-2">
                   <Menu>
                     {({ open }) => (

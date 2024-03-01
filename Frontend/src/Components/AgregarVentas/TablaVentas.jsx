@@ -1,11 +1,11 @@
-import React from "react";
+
 import { Cantidad } from "./Cantidad";
 import { Botones } from "./Botones";
 
-export const TablaVentas = () => {
+ const TablaVentas = () => {
   return (
     <>
-      <div className=" w-[50%] rounded-[5px] m-2 ">
+      <div className=" w-[50%] rounded-[5px] m-2 pt-28 ">
        <div className="flex justify-between p-2">
        <div className="">
           <select className="w-[200px] h-[35px] rounded-[5px] p-1 border border-gray-300 text-gray-400 bg-slate-100 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
@@ -51,8 +51,6 @@ export const TablaVentas = () => {
 
           <tbody className="text-center">
            
-<<<<<<< HEAD
-=======
             <tr>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
@@ -73,50 +71,6 @@ export const TablaVentas = () => {
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
             </tr>
 
-            <tr>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-            </tr>
-
->>>>>>> d148e5a (tabla de ventas y botones terminados)
-            <tr>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-            </tr>
-
-            <tr>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-            </tr>
-
-            <tr>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-            </tr>
-
-            <tr>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-            </tr>
-
-            <tr>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-              <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
-            </tr>
-
-<<<<<<< HEAD
             <tr>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
@@ -159,8 +113,6 @@ export const TablaVentas = () => {
               <td className="hover:bg-gray-300 hover:text-white hover:transition hover:duration-700 ">Maria</td>
             </tr>
 
-=======
->>>>>>> d148e5a (tabla de ventas y botones terminados)
           </tbody>
         </table>
         </div>
@@ -193,3 +145,4 @@ export const TablaVentas = () => {
     </>
   );
 };
+export default TablaVentas;

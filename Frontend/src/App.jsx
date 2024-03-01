@@ -1,29 +1,20 @@
-import { useState } from "react";
 import "./App.css";
-import Cards from "./Components/Dashboard/Cards.jsx";
-import UsersList from "./Components/Gestion_usuarios/UsersList.jsx";
+import { Routes, Route } from "react-router";
 import Navbar from "./Components/Navbar.jsx";
-
-
-
-
-import { TablaVentas } from "./Components/AgregarVentas/TablaVentas";
-import Sidebar from "./Components/Dashboard/Sidebar.jsx";
+import UserList from "./Components/Gestion_usuarios/UsersList.jsx";
+import Dashboard from "./Components/Dashboard/Dashboard.jsx";
+import TablaVentas from "./Components/AgregarVentas/TablaVentas.jsx";
 
 function App() {
-
-  const [showSidebar, setShowSidebar] = useState(false);
-  const toggleSidebar = (e) => {
-    e.preventDefault();
-    setShowSidebar(!showSidebar);
-  };
-
-
   return (
     <>
-      <Navbar toggleSidebar={toggleSidebar}/>
-      <Sidebar showSidebar={showSidebar}  />      
-      <Cards />
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          <Route path="/userlist" element={<UserList />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/tablaventas" element={<TablaVentas />} />
+        </Route>
+      </Routes>
     </>
   );
 }

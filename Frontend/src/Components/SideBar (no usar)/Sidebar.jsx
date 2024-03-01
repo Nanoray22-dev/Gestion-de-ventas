@@ -1,4 +1,7 @@
-import React from 'react';
+// Sidebar.js
+import PropTypes from "prop-types";
+
+
 import { HomeIcon, ShoppingBagIcon, ShoppingCartIcon, CashIcon, ChartBarIcon, CurrencyDollarIcon } from '@heroicons/react/outline';
 
 const Sidebar = ({showSidebar}) => {
@@ -46,3 +49,8 @@ const Sidebar = ({showSidebar}) => {
 };
 
 export default Sidebar;
+
+Sidebar.propTypes = {
+  showSidebar: PropTypes.bool.isRequired,
+  
+};
