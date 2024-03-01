@@ -1,12 +1,16 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 import AddUserModal from "./AddUserModal";
-// import EditUserModal from "./EditUserModal";
+import EditUserModal from "./EditUserModal";
 import { Menu } from "@headlessui/react";
 
+import ColumnVisibilityDropdown from "./ColumnVisibilityDropdown";
+
 function UsersList() {
-  const [users, setUsers] = useState([]);/*  */
+  const [users, setUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -42,13 +46,32 @@ function UsersList() {
 
   const addUser = async (userData) => {
     try {
-      const response = await axios.post("http://localhost:8000/api/users", userData);
-
-      if (!response.ok) {
-        throw new Error("Error al agregar usuario");
+      // Verificar si el nombre de usuario ya existe
+      const existingUser = users.find((user) => user.username === userData.username);
+      if (existingUser) {
+        // Mostrar SweetAlert de error
+        Swal.fire({
+          title: "Error",
+          text: "este usuario ya existe.",
+          icon: "error",
+        });
+        return;
       }
 
-      console.log("Usuario agregado correctamente");
+      // Si el nombre de usuario no existe, agregar el usuario
+      const response = await axios.post(
+        "http://localhost:8000/api/users",
+        userData
+      );
+
+      if (response.status === 201) {
+        // Mostrar SweetAlert de éxito
+        Swal.fire({
+          title: "¡Usuario agregado!",
+          text: "El usuario se ha agregado correctamente.",
+          icon: "success",
+        });
+      }
 
       closeModal();
       fetchUsers();
@@ -62,30 +85,53 @@ function UsersList() {
     setIsEditModalOpen(true);
   };
 
-  const handleEditUser = async (userData) => {
+  const handleEditUser = async (updatedUserData) => {
     try {
-      const response = await axios.put(`http://localhost:8000/api/users/${userData.id}`, userData);
-
-      if (!response.ok) {
-        throw new Error("Error al editar usuario");
+      const response = await axios.put(
+        `http://localhost:8000/api/users/${selectedUserId}`,
+        updatedUserData
+      );
+      if (response.status === 200) {
+        Swal.fire({
+          title: "¡Usuario modificado!",
+          text: "Usuario actualizado exitosamente.",
+          icon: "success",
+        });
       }
-
-      console.log("Usuario editado correctamente");
       closeEditModal();
-      fetchUsers();
+      fetchUsers(); // Actualizar lista de usuarios después de editar uno
     } catch (error) {
-      console.error("Error al editar usuario:", error.message);
+      console.error("Error al actualizar usuario:", error.message);
     }
   };
 
-  const deletePerson = async (userId) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/users/${userId}`);
-      console.log("Usuario eliminado correctamente");
+  const deletePerson = async () => {
+
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Una vez eliminado, no podrás recuperar este usuario.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrar",
+      cancelButtonText: "Cancelar",
+    });
+    if (result.isConfirmed){
+      try {
+      await Promise.all(
+        selectedUsers.map((userId) =>
+          axios.delete(`http://localhost:8000/api/users/${userId}`)
+        )
+      );
+      console.log("Usuarios eliminados correctamente");
       fetchUsers();
+      setSelectedUsers([]);
     } catch (error) {
-      console.error("Error al eliminar usuario:", error.message);
+      console.error("Error al eliminar usuarios:", error.message);
     }
+    }
+    
   };
 
   const filteredUsers = users.filter((user) =>
@@ -103,8 +149,45 @@ function UsersList() {
     setCurrentPage(1);
   };
 
+  const handleUserSelection = (userId) => {
+    const isSelected = selectedUsers.includes(userId);
+    if (isSelected) {
+      setSelectedUsers(selectedUsers.filter((id) => id !== userId));
+    } else {
+      setSelectedUsers([...selectedUsers, userId]);
+    }
+  };
+
+  const handleSelectAll = (event) => {
+    const checked = event.target.checked;
+    setSelectAll(checked);
+    // Actualizar el estado de cada checkbox individual
+    const updatedUsers = users.map((user) => ({
+      ...user,
+      selected: checked,
+    }));
+    setUsers(updatedUsers);
+    const allSelected = updatedUsers.every((user) => user.selected);
+    setSelectAll(allSelected);
+  };
+
+  const imprimirSelectedUsers = () => {
+    // Obtener los detalles de los usuarios seleccionados
+    const selectedUsersDetails = users.filter((user) =>
+      selectedUsers.includes(user.id)
+    );
+
+    console.log("Imprimiendo usuarios seleccionados:", selectedUsersDetails);
+
+    Swal.fire({
+      title: "¡Imprimiendo!",
+      text: "¡se ha imprimido correctamente!",
+      icon: "success",
+    });
+  };
+
   return (
-    <div className="p-4">
+    <div className="p-4 pt-28">
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
         onClick={openModal}
@@ -118,8 +201,17 @@ function UsersList() {
         addUser={addUser}
       />
 
-      <div className="flex items-center justify-between py-4 px-8">
-        <div className="flex items-center">
+      {selectedUserId && (
+        <EditUserModal
+          isOpen={isEditModalOpen}
+          onClose={closeEditModal}
+          onSave={handleEditUser}
+          user={users.find((user) => user.id === selectedUserId)}
+        />
+      )}
+
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+        <div className="flex items-center mb-4 md:mb-0">
           <select
             id="usersPerPage"
             value={usersPerPage}
@@ -136,120 +228,137 @@ function UsersList() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <label htmlFor="">Buscar:</label>
+          <label htmlFor="search" className="mr-2">
+            Buscar:
+          </label>
           <input
+            id="search"
             type="text"
             placeholder="Buscar por nombre..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border rounded px-2 py-1"
           />
-
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            PDF
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            CSV
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            Impresión
-          </button>
-          <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-            Borrar
-          </button>
-
-          <div className="dropdown relative">
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2">
-              Visibilidad por columna
+          <div className="flex items-center">
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+              PDF
             </button>
-            <div className="dropdown-content absolute hidden bg-white rounded shadow-md mt-2">
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Nombre de Usuario
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Email
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Nombre de Empresa
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Número de Teléfono
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Papel
-              </label>
-              <label className="block px-4 py-2">
-                <input type="checkbox" /> Estado
-              </label>
-            </div>
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+              CSV
+            </button>
+            <button
+              onClick={imprimirSelectedUsers}
+              disabled={selectedUsers.length === 0}
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2"
+            >
+              Impresión
+            </button>
+            <button
+              onClick={deletePerson}
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2"
+            >
+              Borrar
+            </button>
+            {/*  */}
+
+            <ColumnVisibilityDropdown />
+
+            {/*  */}
           </div>
         </div>
       </div>
 
-      <table className="table-auto w-full">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Nombre de Usuario</th>
-            <th className="px-4 py-2">Email</th>
-            <th className="px-4 py-2">Nombre de Empresa</th>
-            <th className="px-4 py-2">Número de Teléfono</th>
-            <th className="px-4 py-2">Papel</th>
-            <th className="px-4 py-2">Estado</th>
-            <th className="px-4 py-2">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentUsers.map((user) => (
-            <tr key={user.id}>
-              <td className="border px-4 py-2">{user.username}</td>
-              <td className="border px-4 py-2">{user.email}</td>
-              <td className="border px-4 py-2">{user.empresa}</td>
-              <td className="border px-4 py-2">{user.telefono}</td>
-              <td className="border px-4 py-2">{user.role}</td>
-              <td className="border px-4 py-2">{user.status}</td>
-              <td className="border px-4 py-2">
-                <Menu>
-                  {({ open }) => (
-                    <>
-                      <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
-                        Acciones
-                      </Menu.Button>
-
-                      <Menu.Items
-                        className={`${
-                          open ? "block" : "hidden"
-                        } absolute z-10 right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 focus:outline-none`}
-                      >
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-100" : ""
-                              } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
-                              onClick={() => openEditModal(user.id)}
-                            >
-                              Editar
-                            </button>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700 w-full text-left`} onClick={() => deletePerson(user.id)}>
-                              Eliminar
-                            </button>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </>
-                  )}
-                </Menu>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full bg-slate-100 rounded-md">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">
+                {" "}
+                <input
+                  type="checkbox"
+                  checked={selectAll}
+                  onChange={handleSelectAll}
+                 
+                />
+              </th>
+              <th className="px-4 py-2">Nombre de Usuario</th>
+              <th className="px-4 py-2">Email</th>
+              <th className="px-4 py-2">Nombre de Empresa</th>
+              <th className="px-4 py-2">Número de Teléfono</th>
+              <th className="px-4 py-2">Papel</th>
+              <th className="px-4 py-2">Estado</th>
+              <th className="px-4 py-2">Acción</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentUsers.map((user) => (
+              <tr key={user.id}>
+                <td className="border px-4 py-2">
+                  <input
+                    type="checkbox"
+                    checked={user.selected}
+                    onChange={() => handleUserSelection(user.id)}
+                  />
+                </td>
 
-      <ul className="pagination flex p-4 py-4">
+                <td className="border px-4 py-2">{user.username}</td>
+                <td className="border px-4 py-2">{user.email}</td>
+                <td className="border px-4 py-2">{user.empresa}</td>
+                <td className="border px-4 py-2">{user.telefono}</td>
+                <td className="border px-4 py-2">{user.role}</td>
+                <td className={`border px-4 py-2`}>
+                <span className={`inline-block bg-gray-200 rounded px-2 py-1 border border-gray-300 ${user.status === 'active' ? 'bg-green-300' : 'bg-red-300'} `}>{user.status}</span>
+                 
+                  </td>
+                <td className="border px-4 py-2">
+                  <Menu>
+                    {({ open }) => (
+                      <>
+                        <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2">
+                          Acciones
+                        </Menu.Button>
+
+                        <Menu.Items
+                          className={`${
+                            open ? "block" : "hidden"
+                          } absolute z-10 right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 focus:outline-none`}
+                        >
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active ? "bg-gray-100" : ""
+                                } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                                onClick={() => openEditModal(user.id)}
+                              >
+                                Editar
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active ? "bg-gray-100" : ""
+                                } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                                onClick={() => deletePerson(user.id)}
+                              >
+                                Eliminar
+                              </button>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </>
+                    )}
+                  </Menu>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <ul className="pagination flex justify-center mt-4">
         <li className="page-item">
           <a
             className="page-link  border border-gray-300 px-3 py-1 rounded-l"
