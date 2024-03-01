@@ -9,7 +9,7 @@ class GastosController extends Controller
 {
     public function index()
     {
-        // Retrieve all gastos from the database
+        
         $gastos = Gastos::all();
         return response()->json($gastos);
     }
@@ -22,7 +22,7 @@ class GastosController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            // Define the validation rules for the gastos properties here
+        
         ]);
 
         $gastos = Gastos::create($validatedData);
@@ -32,7 +32,7 @@ class GastosController extends Controller
     public function update(Request $request, Gastos $gastos)
     {
         $validatedData = $request->validate([
-            // Define the validation rules for the gastos properties here
+           
         ]);
 
         $gastos->update($validatedData);
