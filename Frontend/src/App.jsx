@@ -3,6 +3,8 @@ import "./App.css";
 import Cards from "./Components/Dashboard/Cards.jsx";
 import UsersList from "./Components/Gestion_usuarios/UsersList.jsx";
 import Navbar from "./Components/Navbar.jsx";
+import Sidebar from "./Components/Dashboard/Sidebar.jsx";
+import { TablaListarCompras } from "./Components/ListarCompras/TablaListarCompras.jsx";
 
 
 
@@ -21,19 +23,17 @@ function App() {
     <>
 
     <div className="flex">
-      {/* <SideBar />
-      <Navbar /> */}
-     {/*  <div className="flex-1 p-8">
+    <Sidebar showSidebar={showSidebar}  />      
+
+    <Navbar toggleSidebar={toggleSidebar}/>
+      <div className="flex-1 p-8">
         <Cards />
-      </div> */}
+      </div>
     </div>
     {/* <TablaVentas/> */}
-    <TablaListarCompras/>
- 
+    {/* <TablaListarCompras/> */}
 
-      <Navbar toggleSidebar={toggleSidebar}/>
-      <Sidebar showSidebar={showSidebar}  />      
-      <Cards />
+      {/* <Cards /> */}
 
     </>
 
