@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 class GastosController extends Controller
 {
     public function index()
-    {
-        
+
         $gastos = Gastos::all();
         return response()->json($gastos);
     }
@@ -22,7 +21,7 @@ class GastosController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-        
+
         ]);
 
         $gastos = Gastos::create($validatedData);
@@ -32,7 +31,7 @@ class GastosController extends Controller
     public function update(Request $request, Gastos $gastos)
     {
         $validatedData = $request->validate([
-           
+
         ]);
 
         $gastos->update($validatedData);
