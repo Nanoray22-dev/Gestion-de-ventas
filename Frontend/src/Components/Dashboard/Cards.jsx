@@ -1,4 +1,6 @@
 import  { useState, useEffect } from "react";
+import { Graficas } from "./Graficas";
+import { LineasGraficas } from "./LineasGraficas";
 
 export default function Cards() {
   const [totalIncome, setTotalIncome] = useState(null);
@@ -14,6 +16,9 @@ export default function Cards() {
   }, []);
 
   return (
+    <>
+    
+   
     <div className="flex justify-center mt-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center px-32 ">
@@ -54,6 +59,15 @@ export default function Cards() {
           </p>
         </div>
       </div>
+     
+
     </div>
+    <div className="flex justify-center my-10 ">
+    <Graficas
+    titulo='Flujo de Fondos'
+    />
+    <LineasGraficas/>
+    </div>
+    </>
   );
 }
