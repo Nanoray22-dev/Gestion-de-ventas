@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class GastosController extends Controller
 {
     public function index()
+    {
 
         $gastos = Gastos::all();
         return response()->json($gastos);
