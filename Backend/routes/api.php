@@ -36,11 +36,11 @@ Route::delete('/gastos/{id}', [GastosController::class, 'destroy']);
 
 Route::get('/ingresos', [IngresosController::class, 'index']);
 Route::get('/ingresos/{id}', [IngresosController::class, 'show']);
-Route::post('/ingresos', [IngresosController::class, 'store']);
+Route::post('/ingresos', [IngresosController::class, 'index']);
 Route::put('/ingresos/{id}', [IngresosController::class, 'update']);
 Route::delete('/ingresos/{id}', [IngresosController::class, 'destroy']);
 
-Route::get('/ganancias', [GananciasController::class, 'index']);
+Route::get('/ganancias', [GananciasController::class, 'getIngresos']);
 Route::get('/ganancias/{id}', [GananciasController::class, 'show']);
 Route::post('/ganancias', [GananciasController::class, 'store']);
 Route::put('/ganancias/{id}', [GananciasController::class, 'update']);

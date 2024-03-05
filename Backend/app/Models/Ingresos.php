@@ -11,5 +11,5 @@ class Ingresos extends Model
 
     protected $table = 'ingresos';
 
-    protected $fillable = ['concepto', 'valor']; 
+    protected $fillable = ['concepto', 'valor', 'impuesto', 'descuento', 'total'];
 }
