@@ -5,7 +5,7 @@ import { Botones } from "./Botones";
  const TablaVentas = () => {
   return (
     <>
-      <div className=" w-[50%] rounded-[5px] m-2 pt-28 ">
+      <div className=" w-[50%] rounded-[5px]  ">
        <div className="flex justify-between p-2">
        <div className="">
           <select className="w-[200px] h-[35px] rounded-[5px] p-1 border border-gray-300 text-gray-400 bg-slate-100 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">

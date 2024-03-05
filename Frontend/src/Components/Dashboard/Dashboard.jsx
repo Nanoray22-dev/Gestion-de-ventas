@@ -2,19 +2,30 @@
 
 import Cards from "./Cards";
 
-
 const Dashboard = () => {
-  // Datos de ejemplo para el dashboard
-  // const inventoryData = 150;
-  // const recentSales = 25;
-
   return (
-    <div>
-      <h2 className="pt-20">Dashboard</h2>
-      {/* <p>Inventario Actual: {inventoryData}</p>
-      <p>Ventas Recientes: {recentSales}</p> */}
-      {/* Más contenido del dashboard según tus necesidades */}
-      <Cards/>
+    <div className="flex flex-col">
+      <div className="main-title">
+        <p className="font-weight-bold">DASHBOARD</p>
+      </div>
+      <div className="flex items-center justify-between px-5 pt-3">
+        <h2 className="text-4xl ml-14">Bienvenido Admin</h2>
+        <div className="btn-group" role="group" aria-label="Basic example">
+          <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l-2xl">
+            Hoy
+          </button>
+          <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4">
+            Los últimos 7 días
+          </button>
+          <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4">
+            Este mes
+          </button>
+          <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-2xl">
+            Este año
+          </button>
+        </div>
+      </div>
+      <Cards />
     </div>
   );
 };
