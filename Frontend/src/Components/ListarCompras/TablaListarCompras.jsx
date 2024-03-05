@@ -6,7 +6,7 @@ import TablaCompras from "./TablaCompras";
   return (
     <>
 
-      <div className="w-[85%]  pt-20">
+      <div className="w-[85%]">
         <div className="m-7">
           <Botones iconText="add" text="Añadir Ventas" />
           <Botones iconText="select_window" text="Ventas de Importación" />
