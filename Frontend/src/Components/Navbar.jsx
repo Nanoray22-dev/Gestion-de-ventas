@@ -128,7 +128,9 @@ const Navbar = () => {
               >
                 <ShoppingCartIcon className="w-6 h-6 mr-2" />
                 Compra
-              </Link>
+
+                </Link>
+
             </li>
             <li>
               <a
