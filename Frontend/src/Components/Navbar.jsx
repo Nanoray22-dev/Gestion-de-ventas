@@ -35,8 +35,8 @@ const Navbar = () => {
         <button className="menu-icon" onClick={toggleSidebar}>
           <TextNavbar spanIcon="menu" text="" />
         </button>
-        <div className="header-left">
-          <span className="material-icons-outlined">search</span>
+        <div className="header-left list-none">
+        <TextNavbar spanIcon="menu" text="" />
         </div>
         <div className="flex list-none">
           <Link to="/tablaventas">

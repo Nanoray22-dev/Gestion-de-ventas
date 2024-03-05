@@ -359,9 +359,9 @@ function UsersList() {
       </div>
 
       <ul className="pagination flex justify-center mt-4">
-        <li className="page-item">
+        <li className="page-item   hover:text-white">
           <a
-            className="page-link  border border-gray-300 px-3 py-1 rounded-l"
+            className="page-link  border border-gray-300 px-3 py-1 rounded-l hover:bg-blue-500"
             href="#"
             onClick={() => paginate(1)}
           >
@@ -382,9 +382,9 @@ function UsersList() {
             </li>
           )
         )}
-        <li className="page-item">
+        <li className="page-item hover:text-white">
           <a
-            className="page-link  border border-gray-300 px-3 py-1 rounded-r"
+            className="page-link  border border-gray-300 px-3 py-1 rounded-r hover:bg-blue-500"
             href="#"
             onClick={() => paginate(2)}
           >
