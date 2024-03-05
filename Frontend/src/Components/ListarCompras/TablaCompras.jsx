@@ -28,9 +28,9 @@ function TablaCompras() {
     }
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  // const openModal = () => {
+  //   setIsModalOpen(true);
+  // };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -108,14 +108,8 @@ function TablaCompras() {
   };
 
   return (
-    <div className="p-4">
-      {/* <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-        onClick={openModal}
-      >
-        Agregar Usuario
-      </button>
- */}
+    <div className="py-10 ml-32">
+     
       <AddUserModal
         isOpen={isModalOpen}
         closeModal={closeModal}
@@ -248,7 +242,7 @@ function TablaCompras() {
                                 } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2  hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
                                 onClick={() => openEditModal(user.id)}
                               >
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                   note_stack
                                 </span>
                                 Imprimir Ventas
@@ -283,7 +277,7 @@ function TablaCompras() {
                                 } flex item-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
                                 onClick={() => openEditModal(user.id)}
                               >
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                   add
                                 </span>
                                 Añadir Pago
@@ -300,7 +294,7 @@ function TablaCompras() {
                                 } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2  hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
                                 onClick={() => openEditModal(user.id)}
                               >
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                   local_atm
                                 </span>
                                 Ver Pago
@@ -318,7 +312,7 @@ function TablaCompras() {
                                 } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
                                 onClick={() => deletePerson(user.id)}
                               >
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                   local_shipping
                                 </span>
                                 Añadir Entrega
