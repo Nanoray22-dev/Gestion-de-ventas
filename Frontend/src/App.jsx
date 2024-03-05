@@ -8,6 +8,7 @@ import TablaVentas from "./Components/AgregarVentas/TablaVentas.jsx";
 import TablaListarCompras from "./Components/ListarCompras/TablaListarCompras.jsx";
 
 function App() {
+
   return (
     <>
       <Routes>
