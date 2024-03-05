@@ -1,8 +1,7 @@
-
 import "./App.css";
-
 import { Routes, Route } from "react-router";
 import Navbar from "./Components/Navbar.jsx";
+
 import UserList from "./Components/Gestion_usuarios/UsersList.jsx";
 import Dashboard from "./Components/Dashboard/Dashboard.jsx";
 import TablaVentas from "./Components/AgregarVentas/TablaVentas.jsx";
@@ -10,11 +9,12 @@ import TablaListarCompras from "./Components/ListarCompras/TablaListarCompras.js
 
 
 
+
+
+
+
+
 function App() {
-
- 
-
-
   return (
     <>
 
@@ -26,8 +26,8 @@ function App() {
           <Route path="/tablalistarcompras" element={<TablaListarCompras/>}/>
         </Route>
       </Routes>
-    </>
 
+    </>
   );
 }
 

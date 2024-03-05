@@ -5,6 +5,7 @@ import TablaCompras from "./TablaCompras";
  const TablaListarCompras = () => {
   return (
     <>
+
       <div className="w-[85%]  pt-20">
         <div className="m-7">
           <Botones iconText="add" text="Añadir Ventas" />

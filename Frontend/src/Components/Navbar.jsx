@@ -122,13 +122,15 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-            <Link
-                to="/tablalistarcompras"
+              <Link
+               to="tablalistarcompras"
                 className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300"
               >
                 <ShoppingCartIcon className="w-6 h-6 mr-2" />
                 Compra
+
                 </Link>
+
             </li>
             <li>
               <a
