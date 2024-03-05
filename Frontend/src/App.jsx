@@ -12,7 +12,7 @@ import TablaVentas from "./Components/AgregarVentas/TablaVentas.jsx";
 function App() {
 
  
-
+  
 
   return (
     <>
