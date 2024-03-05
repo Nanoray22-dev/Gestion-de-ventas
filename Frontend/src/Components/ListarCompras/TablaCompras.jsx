@@ -108,7 +108,7 @@ function TablaCompras() {
   };
 
   return (
-    <div className="py-10 ml-32">
+    <div className="py-10 ">
      
       <AddUserModal
         isOpen={isModalOpen}
@@ -180,7 +180,7 @@ function TablaCompras() {
       </div>
 
       <div className="">
-        <table className="">
+        <table className="bg-slate-100">
           <thead className="text-left">
             <tr>
               <th className="px-4 py-2 ">
