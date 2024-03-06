@@ -1,5 +1,5 @@
 import { Cantidad } from "./Cantidad";
-import { Botones } from "./Botones";
+import  Botones  from "./Botones";
 
 const TablaVentas = () => {
   return (
