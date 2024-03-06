@@ -28,27 +28,25 @@ function LinesChart() {
   const [expenseData, setExpenseData] = useState([]);
 
   useEffect(() => {
-    
     const fetchIncomeData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/ingresos');
+        const response = await fetch("http://127.0.0.1:8000/api/ingresos");
         const data = await response.json();
-        const incomeValues = data.map(item => item.total);
+        const incomeValues = data.map((item) => item.total);
         setIncomeData(incomeValues);
       } catch (error) {
-        console.error('Error fetching income data:', error);
+        console.error("Error fetching income data:", error);
       }
     };
 
-    
     const fetchExpenseData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/gastos');
+        const response = await fetch("http://127.0.0.1:8000/api/gastos");
         const data = await response.json();
-        const expenseValues = data.map(item => item.valor);
+        const expenseValues = data.map((item) => item.valor);
         setExpenseData(expenseValues);
       } catch (error) {
-        console.error('Error fetching expense data:', error);
+        console.error("Error fetching expense data:", error);
       }
     };
 
@@ -105,5 +103,3 @@ function LinesChart() {
 }
 
 export default LinesChart;
-
-export default LinesChart; 
