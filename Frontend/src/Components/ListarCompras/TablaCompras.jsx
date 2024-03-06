@@ -32,6 +32,10 @@ function TablaCompras() {
   //   setIsModalOpen(true);
   // };
 
+  const openAddSaleModal = () => {
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -109,7 +113,6 @@ function TablaCompras() {
 
   return (
     <div className="py-10 ">
-     
       <AddUserModal
         isOpen={isModalOpen}
         closeModal={closeModal}
@@ -142,7 +145,7 @@ function TablaCompras() {
           </label>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-10">
           <label htmlFor="search" className="mr-2">
             Buscar:
           </label>
@@ -155,20 +158,21 @@ function TablaCompras() {
             className="border rounded px-2 py-1"
           />
           <div className="flex items-center">
-            <button className="bg-gray-400 text-gray-700 rounded px-4 py-2 mr-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
               PDF
             </button>
-            <button className="bg-gray-400 text-gray-700 rounded px-4 py-2 mr-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
+
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
               CSV
             </button>
-            <button className="bg-gray-400 text-gray-700 rounded px-4 py-2 mr-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
               Impresión
             </button>
-            <button className="bg-gray-400 text-gray-700 rounded px-4 py-2 mr-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
               Borrar
             </button>
-            <button className="bg-gray-400 text-gray-700 rounded px-4 py-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
-              Visibilidad de la Columna
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 transition duration-300 hover:bg-gray-500 hover:text-white">
+              Visibilidad por Columna
             </button>
             {/*  */}
 
@@ -179,51 +183,49 @@ function TablaCompras() {
         </div>
       </div>
 
-      <div className="">
-        <table className="bg-slate-100">
-          <thead className="text-left">
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full bg-slate-100 rounded-md">
+          <thead>
             <tr>
               <th className="px-4 py-2 ">
                 <input type="checkbox" className="" />
               </th>
 
-              <th className="px-4 py-2 ">Fecha</th>
-              <th className="px-4 py-2">Nro. Venta/Factura</th>
-              <th className="px-4 py-2">
-                Vendedor/Facturador/Persona Servicio
-              </th>
-              <th className="px-4 py-2">Cliente</th>
-              <th className="px-4 py-2">Estado de Venta</th>
-              <th className="px-4 py-2 ">Estado de Pago</th>
-              <th className="px-4 py-2">Total</th>
-              <th className="px-4 py-2">Pagado</th>
-              <th className="px-4 py-2">Debido</th>
-              <th className="px-4 py-2">Metodo de Pago</th>
-              <th className="px-4 py-2">Acción</th>
+              <th className="border px-4 py-2 ">Fecha</th>
+              <th className="border px-4 py-2">Nro. Venta/Factura</th>
+              <th className="border px-4 py-2">Vendedor</th>
+              <th className="border px-4 py-2">Cliente</th>
+              <th className="border px-4 py-2">Est. Venta</th>
+              <th className="border px-4 py-2 ">Est. Pago</th>
+              <th className="border px-4 py-2">Total</th>
+              <th className="border px-4 py-2">Pagado</th>
+              <th className="border px-4 py-2">Saldo</th>
+              <th className="border px-4 py-2">Metodo de Pago</th>
+              <th className="border px-4 py-2">Acción</th>
             </tr>
           </thead>
           <tbody className="text-center">
             {currentUsers.map((user) => (
               <tr key={user.id}>
-                <td className="border-t ">
+                <td className="border px-4 py-2">
                   {" "}
                   <input type="checkbox" className="" />
                 </td>
-                <td className="border-t m-4 ">Terminado</td>
-                <td className="border-t  ">Terminado</td>
-                <td className="border-t  ">Terminado</td>
-                <td className="border-t  ">Terminado</td>
-                <td className="border-t  ">Terminado</td>
-                <td className="border-t  ">Terminado</td>
-                <td className="border-t  ">Terminado</td>
-                <td className="border-t  ">Terminado</td>
-                <td className="border-t ">Pagado</td>{" "}
-                <td className="border-t px-4 py-2">img</td>
-                <td className="border-t ">
+                <td className="border px-4 py-2">Terminado</td>
+                <td className="border px-4 py-2">Terminado</td>
+                <td className="border px-4 py-2">Terminado</td>
+                <td className="border px-4 py-2">Terminado</td>
+                <td className="border px-4 py-2">Terminado</td>
+                <td className="border px-4 py-2">Terminado</td>
+                <td className="border px-4 py-2">Terminado</td>
+                <td className="border px-4 py-2">Terminado</td>
+                <td className="border px-4 py-2">Pagado</td>{" "}
+                <td className="border px-4 py-2">Efectivo</td>
+                <td className="border px-4 py-2">
                   <Menu>
                     {({ open }) => (
                       <>
-                        <Menu.Button className="border text-gray-500 py-1 px-2 rounded mr-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
+                        <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
                           Acciones
                         </Menu.Button>
 
@@ -236,10 +238,8 @@ function TablaCompras() {
                             {({ active }) => (
                               <button
                                 className={`${
-                                  active
-                                    ? "bg-gray-100 flex items-center gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
-                                    : ""
-                                } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2  hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
+                                  active ? "bg-gray-100" : ""
+                                } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
                                 onClick={() => openEditModal(user.id)}
                               >
                                 <span className="material-symbols-outlined">
