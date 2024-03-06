@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router";
-import Navbar from "./Components/Navbar.jsx";
+import Navbar from "./Components/Navbar/Navbar.jsx";
 import UserList from "./Components/Gestion_usuarios/UsersList.jsx";
 import Dashboard from "./Components/Dashboard/Dashboard.jsx";
 import TablaVentas from "./Components/AgregarVentas/TablaVentas.jsx";
