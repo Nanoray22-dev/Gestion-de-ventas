@@ -1,5 +1,5 @@
 
-import { Botones } from "../AgregarVentas/Botones";
+import Botones from "../AgregarVentas/Botones";
 import TablaCompras from "./TablaCompras";
 
  const TablaListarCompras = () => {
