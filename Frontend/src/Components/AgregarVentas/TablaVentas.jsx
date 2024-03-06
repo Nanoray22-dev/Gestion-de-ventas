@@ -1,7 +1,10 @@
 import { Cantidad } from "./Cantidad";
+
+
 import Botones from "./Botones";
 import ProductLists from "./ProductLists";
 import Modulos from "./Modulos";
+
 
 const TablaVentas = () => {
   return (
