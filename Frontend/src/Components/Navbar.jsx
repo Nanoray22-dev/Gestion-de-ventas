@@ -140,7 +140,7 @@ const Navbar = () => {
           <li className="sidebar-list-item">
             <Link
               to="tablalistarcompras"
-              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-600"
+              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-400"
             >
               <ShoppingCartIcon className="w-6 h-6 mr-2" />
               Compra
