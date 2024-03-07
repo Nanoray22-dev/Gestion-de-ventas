@@ -3,22 +3,12 @@
 use App\Http\Controllers\GananciasController;
 use App\Http\Controllers\GastosController;
 use App\Http\Controllers\IngresosController;
+use App\Http\Controllers\reporteComprasController;
 use App\Http\Controllers\reporteUsuariosController;
 use App\Http\Controllers\usuariosController;
 use App\Http\Controllers\VentasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -49,3 +39,4 @@ Route::put('/ganancias/{id}', [GananciasController::class, 'update']);
 Route::delete('/ganancias/{id}', [GananciasController::class, 'destroy']);
 
 Route::get('usuarios-pdf', [reporteUsuariosController::class, 'indexPdf']);
+Route::get('compras-pdf', [reporteComprasController::class, 'indexPdf']);
