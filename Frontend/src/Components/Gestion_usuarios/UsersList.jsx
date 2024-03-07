@@ -52,18 +52,21 @@ function UsersList() {
         // Mostrar SweetAlert de error
         Swal.fire({
           title: "Error",
-          text: "este usuario ya existe.",
+          text: "Este usuario ya existe.",
           icon: "error",
         });
         return;
       }
-
+  
       // Si el nombre de usuario no existe, agregar el usuario
+      console.log("Agregando usuario:", userData); // Agregamos un console.log() aquí
       const response = await axios.post(
         "http://localhost:8000/api/users",
         userData
       );
-
+  
+      console.log("Respuesta del servidor:", response.data); // Agregamos otro console.log() aquí
+  
       if (response.status === 201) {
         // Mostrar SweetAlert de éxito
         Swal.fire({
@@ -72,13 +75,14 @@ function UsersList() {
           icon: "success",
         });
       }
-
+  
       closeModal();
       fetchUsers();
     } catch (error) {
       console.error("Error al agregar usuario:", error.message);
     }
   };
+  
 
   const openEditModal = (userId) => {
     setSelectedUserId(userId);
@@ -359,9 +363,9 @@ function UsersList() {
       </div>
 
       <ul className="pagination flex justify-center mt-4">
-        <li className="page-item">
+        <li className="page-item   hover:text-white">
           <a
-            className="page-link  border border-gray-300 px-3 py-1 rounded-l"
+            className="page-link  border border-gray-300 px-3 py-1 rounded-l hover:bg-blue-500"
             href="#"
             onClick={() => paginate(1)}
           >
@@ -382,9 +386,9 @@ function UsersList() {
             </li>
           )
         )}
-        <li className="page-item">
+        <li className="page-item hover:text-white">
           <a
-            className="page-link  border border-gray-300 px-3 py-1 rounded-r"
+            className="page-link  border border-gray-300 px-3 py-1 rounded-r hover:bg-blue-500"
             href="#"
             onClick={() => paginate(2)}
           >
