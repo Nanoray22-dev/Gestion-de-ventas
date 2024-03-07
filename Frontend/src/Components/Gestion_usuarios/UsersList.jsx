@@ -71,13 +71,13 @@ function UsersList() {
       }
 
       // Si el nombre de usuario no existe, agregar el usuario
-      console.log("Agregando usuario:", userData); 
+      console.log("Agregando usuario:", userData);
       const response = await axios.post(
         "http://127.0.0.1:8000/api/users",
         userData
       );
 
-      console.log("Respuesta del servidor:", response.data); 
+      console.log("Respuesta del servidor:", response.data); // Agregamos otro console.log() aquí
 
       if (response.status === 201) {
         // Mostrar SweetAlert de éxito
@@ -94,7 +94,6 @@ function UsersList() {
       console.error("Error al agregar usuario:", error.message);
     }
   };
-  
 
   const openEditModal = (userId) => {
     setSelectedUserId(userId);
@@ -134,12 +133,16 @@ function UsersList() {
     });
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:8000/api/users/${userId}`);
-        console.log("Usuario eliminado correctamente");
+        await Promise.all(
+          selectedUsers.map((userId) =>
+            axios.delete(`http://127.0.0.1:8000/api/users/${userId}`)
+          )
+        );
+        console.log("Usuarios eliminados correctamente");
         fetchUsers();
         setSelectedUsers([]);
       } catch (error) {
-        console.error("Error al eliminar usuario:", error.message);
+        console.error("Error al eliminar usuarios:", error.message);
       }
     }
   };

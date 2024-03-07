@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { endpoint } from "../../services/http";
+
 import { Menu } from "@headlessui/react";
 import AgregarVentaModal from "./AgregarVentaModal";
 import EditComprasModal from "./EditComprasModal";
@@ -15,6 +16,17 @@ function TablaCompras() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [comprasPerPage, setComprasPerPage] = useState(10);
+
+  const getPdf = async () => {
+    const response = await axios.get(`${endpoint}/compras-pdf`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(
+      new Blob([response.data], { type: "application/pdf" })
+    );
+    window.open(url, "_blank");
+  };
 
   useEffect(() => {
     fetchCompras();
