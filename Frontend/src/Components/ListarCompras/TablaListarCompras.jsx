@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import Botones from "../AgregarVentas/Botones";
 import TablaCompras from "./TablaCompras";
 import AgregarVentaModal from "./AgregarVentaModal";

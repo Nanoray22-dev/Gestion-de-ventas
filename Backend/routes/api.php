@@ -39,6 +39,15 @@ Route::post('/ganancias', [GananciasController::class, 'store']);
 Route::put('/ganancias/{id}', [GananciasController::class, 'update']);
 Route::delete('/ganancias/{id}', [GananciasController::class, 'destroy']);
 
+
+
+Route::get('/ventas', [VentasController::class, 'index']);
+Route::get('/ventas/{id}', [VentasController::class, 'show']);
+Route::post('/ventas', [VentasController::class, 'store']);
+Route::put('/ventas/{id}', [VentasController::class, 'update']);
+Route::delete('/ventas/{id}', [VentasController::class, 'destroy']);
+
+
 Route::get('usuarios-pdf', [reporteUsuariosController::class, 'indexPdf']);
 Route::get('compras-pdf', [reporteComprasController::class, 'indexPdf']);
 
