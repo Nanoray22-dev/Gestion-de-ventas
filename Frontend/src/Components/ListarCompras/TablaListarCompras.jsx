@@ -1,13 +1,27 @@
+import React, { useState } from "react";
 import Botones from "../AgregarVentas/Botones";
 import TablaCompras from "./TablaCompras";
+import AgregarVentaModal from "./AgregarVentaModal";
 
 const TablaListarCompras = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const agregarVenta = (formData) => {};
+
   return (
     <>
       <div className="w-full">
         <div className="m-7 flex justify-between items-center">
-          <div className="flex gap-4">
-            <Botones iconText="add" text="Añadir Ventas" />
+          <div className="flex gap-4 ">
+            <Botones iconText="add" text="Añadir Ventas" onClick={openModal} />
             <Botones iconText="select_window" text="Ventas de Importación" />
           </div>
           <div className="flex gap-4 items-center">
@@ -30,6 +44,11 @@ const TablaListarCompras = () => {
 
         <TablaCompras />
       </div>
+      <AgregarVentaModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        agregarVenta={agregarVenta}
+      />
     </>
   );
 };

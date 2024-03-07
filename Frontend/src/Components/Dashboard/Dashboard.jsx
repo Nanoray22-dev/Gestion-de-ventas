@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import Cards from "./Cards";
 
 const Dashboard = () => {
@@ -25,28 +25,13 @@ const Dashboard = () => {
           >
             Hoy
           </button>
-          <button
-            className={`bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ${
-              filter === "ultimos7dias" ? "bg-blue-700" : ""
-            }`}
-            onClick={() => handleFilterChange("ultimos7dias")}
-          >
+          <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4">
             Los últimos 7 días
           </button>
-          <button
-            className={`bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ${
-              filter === "estemes" ? "bg-blue-700" : ""
-            }`}
-            onClick={() => handleFilterChange("estemes")}
-          >
+          <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4">
             Este mes
           </button>
-          <button
-            className={`bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-2xl ${
-              filter === "esteano" ? "bg-blue-700" : ""
-            }`}
-            onClick={() => handleFilterChange("esteano")}
-          >
+          <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-2xl">
             Este año
           </button>
         </div>
