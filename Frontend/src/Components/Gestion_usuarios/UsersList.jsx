@@ -84,6 +84,7 @@ function UsersList() {
       console.error("Error al agregar usuario:", error.message);
     }
   };
+  
 
   const openEditModal = (userId) => {
     setSelectedUserId(userId);

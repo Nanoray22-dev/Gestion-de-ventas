@@ -5,7 +5,6 @@ import App from './App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 
-
 Modal.setAppElement('#root');
 
 ReactDOM.render(
@@ -15,4 +14,3 @@ ReactDOM.render(
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
-);

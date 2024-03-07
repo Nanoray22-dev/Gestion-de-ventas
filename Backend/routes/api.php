@@ -4,6 +4,7 @@ use App\Http\Controllers\GananciasController;
 use App\Http\Controllers\GastosController;
 use App\Http\Controllers\IngresosController;
 use App\Http\Controllers\usuariosController;
+use App\Http\Controllers\VentasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,3 +46,9 @@ Route::get('/ganancias/{id}', [GananciasController::class, 'show']);
 Route::post('/ganancias', [GananciasController::class, 'store']);
 Route::put('/ganancias/{id}', [GananciasController::class, 'update']);
 Route::delete('/ganancias/{id}', [GananciasController::class, 'destroy']);
+
+Route::get('/ventas', [VentasController::class, 'index']);
+Route::get('/ventas/{id}', [VentasController::class, 'show']);
+Route::post('/ventas', [VentasController::class, 'store']);
+Route::put('/ventas/{id}', [VentasController::class, 'update']);
+Route::delete('/ventas/{id}', [VentasController::class, 'destroy']);
