@@ -25,7 +25,7 @@ function UsersList() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users");
+      const response = await axios.get("http://127.0.0.1:8000/api/users");
       setUsers(response.data);
     } catch (error) {
       console.log("Error fetching users", error);
@@ -54,18 +54,21 @@ function UsersList() {
         // Mostrar SweetAlert de error
         Swal.fire({
           title: "Error",
-          text: "este usuario ya existe.",
+          text: "Este usuario ya existe.",
           icon: "error",
         });
         return;
       }
-
+  
       // Si el nombre de usuario no existe, agregar el usuario
+      console.log("Agregando usuario:", userData); // Agregamos un console.log() aquí
       const response = await axios.post(
-        "http://localhost:8000/api/users",
+        "http://127.0.0.1:8000/api/users",
         userData
       );
-
+  
+      console.log("Respuesta del servidor:", response.data); // Agregamos otro console.log() aquí
+  
       if (response.status === 201) {
         // Mostrar SweetAlert de éxito
         Swal.fire({
@@ -74,7 +77,7 @@ function UsersList() {
           icon: "success",
         });
       }
-
+  
       closeModal();
       fetchUsers();
     } catch (error) {
@@ -90,7 +93,7 @@ function UsersList() {
   const handleEditUser = async (updatedUserData) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/users/${selectedUserId}`,
+        `http://127.0.0.1:8000/api/users/${selectedUserId}`,
         updatedUserData
       );
       if (response.status === 200) {
@@ -120,17 +123,19 @@ function UsersList() {
     });
     if (result.isConfirmed) {
       try {
-        await Promise.all(
-          selectedUsers.map((userId) =>
-            axios.delete(`http://localhost:8000/api/users/${userId}`)
-          )
-        );
-        console.log("Usuarios eliminados correctamente");
-        fetchUsers();
-        setSelectedUsers([]);
-      } catch (error) {
-        console.error("Error al eliminar usuarios:", error.message);
-      }
+
+      await Promise.all(
+        selectedUsers.map((userId) =>
+          axios.delete(`http://127.0.0.1:8000/api/users/${userId}`)
+        )
+      );
+      console.log("Usuarios eliminados correctamente");
+      fetchUsers();
+      setSelectedUsers([]);
+    } catch (error) {
+      console.error("Error al eliminar usuarios:", error.message);
+    }
+
     }
   };
 
@@ -181,7 +186,7 @@ function UsersList() {
 
     Swal.fire({
       title: "¡Imprimiendo!",
-      text: "¡se ha imprimido correctamente!",
+      text: "¡se ha impreso correctamente!",
       icon: "success",
     });
   };
