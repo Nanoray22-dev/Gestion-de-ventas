@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ColumnVisibilityDropdown() {
+function ColumnVisibilityDropdown({handleColumnVisibilityChange}) {
   const [isOpen, setIsOpen] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState({
     username: true,
@@ -20,6 +20,7 @@ function ColumnVisibilityDropdown() {
       ...prevVisibleColumns,
       [columnName]: !prevVisibleColumns[columnName],
     }));
+    handleColumnVisibilityChange(columnName)
   };
 
   return (

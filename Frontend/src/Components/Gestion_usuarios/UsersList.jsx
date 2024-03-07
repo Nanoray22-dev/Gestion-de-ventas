@@ -14,7 +14,6 @@ function UsersList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
@@ -72,7 +71,7 @@ function UsersList() {
       }
 
       // Si el nombre de usuario no existe, agregar el usuario
-      console.log("Agregando usuario:", userData); // Agregamos un console.log() aquí
+      console.log("Agregando usuario:", userData);
       const response = await axios.post(
         "http://127.0.0.1:8000/api/users",
         userData
@@ -121,7 +120,7 @@ function UsersList() {
     }
   };
 
-  const deletePerson = async () => {
+  const deletePerson = async (userId) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
       text: "Una vez eliminado, no podrás recuperar este usuario.",
@@ -294,7 +293,10 @@ function UsersList() {
             </button>
             {/*  */}
 
-            <ColumnVisibilityDropdown />
+            <ColumnVisibilityDropdown
+              visibleColumns={visibleColumns}
+              handleColumnVisibilityChange={handleColumnVisibilityChange}
+            />
 
             {/*  */}
           </div>

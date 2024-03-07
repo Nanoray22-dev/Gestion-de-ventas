@@ -5,6 +5,7 @@ use App\Http\Controllers\GastosController;
 use App\Http\Controllers\IngresosController;
 use App\Http\Controllers\reporteUsuariosController;
 use App\Http\Controllers\usuariosController;
+use App\Http\Controllers\VentasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

@@ -4,20 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVentasTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo_venta', 10)->unique(); 
-            $table->unsignedBigInteger('user_id');
+            $table->string('nombre');
+            $table->unsignedInteger('cantidad');
+            $table->decimal('precio', 10, 2);
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('usuarios')->onDelete('cascade');
         });
     }
 
@@ -26,6 +25,6 @@ class CreateVentasTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('productos');
     }
-}
+};
