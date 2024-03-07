@@ -9,6 +9,7 @@ use App\Http\Controllers\usuariosController;
 use App\Http\Controllers\VentasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ComprasController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -40,3 +41,9 @@ Route::delete('/ganancias/{id}', [GananciasController::class, 'destroy']);
 
 Route::get('usuarios-pdf', [reporteUsuariosController::class, 'indexPdf']);
 Route::get('compras-pdf', [reporteComprasController::class, 'indexPdf']);
+
+Route::get('/compras', [ComprasController::class, 'index']);
+Route::get('/compras/{id}', [ComprasController::class, 'show']);
+Route::post('/compras', [ComprasController::class, 'store']);
+Route::put('/compras/{id}', [ComprasController::class, 'update']);
+Route::delete('/compras/{id}', [ComprasController::class, 'destroy']);
