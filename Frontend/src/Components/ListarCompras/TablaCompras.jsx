@@ -196,7 +196,7 @@ function TablaCompras() {
               <th className="border px-4 py-2">Vendedor</th>
               <th className="border px-4 py-2">Cliente</th>
               <th className="border px-4 py-2">Est. Venta</th>
-              <th className="border px-4 py-2 ">Est. Pago</th>
+              <th className="border px-4 py-2">Est. Pago</th>
               <th className="border px-4 py-2">Total</th>
               <th className="border px-4 py-2">Pagado</th>
               <th className="border px-4 py-2">Saldo</th>

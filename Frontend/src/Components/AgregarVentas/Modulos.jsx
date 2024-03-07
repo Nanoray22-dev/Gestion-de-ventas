@@ -1,5 +1,5 @@
-import React from 'react';
-import 'tailwindcss/tailwind.css';
+import React from "react";
+import "tailwindcss/tailwind.css";
 
 const Modulo = ({ text }) => (
   <div className=" bg-gray-800 flex items-center justify-center p-4 h-10 mr-2 rounded-md w-1/3">
