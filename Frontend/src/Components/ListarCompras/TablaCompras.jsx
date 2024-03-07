@@ -1,19 +1,44 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { endpoint } from "../../services/http";
-import AddUserModal from "../Gestion_usuarios/AddUserModal";
-import EditUserModal from "../Gestion_usuarios/EditUserModal";
 import { Menu } from "@headlessui/react";
+import AgregarVentaModal from "./AgregarVentaModal";
+import EditComprasModal from "./EditComprasModal";
 
 function TablaCompras() {
-  const [users, setUsers] = useState([]); /*  */
+  const [compras, setCompras] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedCompraId, setSelectedCompraId] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage, setUsersPerPage] = useState(10);
+  const [comprasPerPage, setComprasPerPage] = useState(10);
+
+  useEffect(() => {
+    fetchCompras();
+    fetchUsuarios();
+  }, []);
+
+  const fetchCompras = async () => {
+    try {
+      const response = await axios.get(`${endpoint}/compras`);
+      setCompras(response.data);
+    } catch (error) {
+      console.log("Error fetching compras", error);
+    }
+  };
+
+  const fetchUsuarios = async () => {
+    try {
+      const response = await axios.get(`${endpoint}/users`);
+      setUsuarios(response.data);
+    } catch (error) {
+      console.log("Error fetching usuarios", error);
+    }
+    console.log(setUsuarios)
+  };
 
   const getPdf = async () => {
     const response = await axios.get(`${endpoint}/compras-pdf`, {
@@ -26,26 +51,9 @@ function TablaCompras() {
     window.open(url, "_blank");
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/users");
-      setUsers(response.data);
-    } catch (error) {
-      console.log("Error fetching users", error);
-    }
-  };
-
-  // const openModal = () => {
+  // const openAddCompraModal = () => {
   //   setIsModalOpen(true);
   // };
-
-  const openAddSaleModal = () => {
-    setIsModalOpen(true);
-  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -55,95 +63,86 @@ function TablaCompras() {
     setIsEditModalOpen(false);
   };
 
-  const addUser = async (userData) => {
+  const addCompra = async (compraData) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/users",
-        userData
-      );
+        await axios.post(`${endpoint}/compras`, compraData);
 
-      if (!response.ok) {
-        throw new Error("Error al agregar usuario");
-      }
-
-      console.log("Usuario agregado correctamente");
+      console.log("Compra agregada correctamente");
 
       closeModal();
-      fetchUsers();
+      fetchCompras();
     } catch (error) {
-      console.error("Error al agregar usuario:", error.message);
+      console.error("Error al agregar compra:", error.message);
     }
   };
 
-  const openEditModal = (userId) => {
-    setSelectedUserId(userId);
+  const openEditModal = (compraId) => {
+    setSelectedCompraId(compraId);
     setIsEditModalOpen(true);
   };
 
-  const handleEditUser = async (updatedUserData) => {
+  const handleEditCompra = async (updatedCompraData) => {
     try {
-      const response = await axios.put(
-        `http://localhost:8000/api/users/${selectedUserId}`,
-        updatedUserData
+          await axios.put(
+        `${endpoint}/compras/${selectedCompraId}`,
+        updatedCompraData
       );
-      if (!response.ok) {
-        throw new Error("Error al actualizar usuario");
-      }
-      console.log("Usuario actualizado correctamente");
+      console.log("Compra actualizada correctamente");
       closeEditModal();
-      fetchUsers(); // Actualizar lista de usuarios después de editar uno
+      fetchCompras();
     } catch (error) {
-      console.error("Error al actualizar usuario:", error.message);
+      console.error("Error al actualizar compra:", error.message);
     }
   };
 
-  const deletePerson = async (userId) => {
+  const deleteCompra = async (compraId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/users/${userId}`);
-      console.log("Usuario eliminado correctamente");
-      fetchUsers();
+      await axios.delete(`${endpoint}/compras/${compraId}`);
+      console.log("Compra eliminada correctamente");
+      fetchCompras();
     } catch (error) {
-      console.error("Error al eliminar usuario:", error.message);
+      console.error("Error al eliminar compra:", error.message);
     }
   };
 
-  const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredCompras = compras.filter((compra) =>
+    // compra.cliente.toLowerCase().includes(searchTerm.toLowerCase())
+    compra.cliente
   );
 
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const indexOfLastCompra = currentPage * comprasPerPage;
+  const indexOfFirstCompra = indexOfLastCompra - comprasPerPage;
+  const currentCompras = filteredCompras.slice(indexOfFirstCompra, indexOfLastCompra);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handlePerPageChange = (event) => {
-    setUsersPerPage(parseInt(event.target.value));
+    setComprasPerPage(parseInt(event.target.value));
     setCurrentPage(1);
   };
 
   return (
-    <div className="py-10 ">
-      <AddUserModal
+    <div className="py-10">
+      <AgregarVentaModal
         isOpen={isModalOpen}
         closeModal={closeModal}
-        addUser={addUser}
+        addCompra={addCompra}
       />
 
-      {selectedUserId && (
-        <EditUserModal
+      {selectedCompraId && (
+        <EditComprasModal
           isOpen={isEditModalOpen}
           onClose={closeEditModal}
-          onSave={handleEditUser}
-          user={users.find((user) => user.id === selectedUserId)}
+          onSave={handleEditCompra}
+          compra={compras.find((compra) => compra.id === selectedCompraId)}
         />
       )}
 
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         <div className="flex items-center mb-4 md:mb-0">
           <select
-            id="usersPerPage"
-            value={usersPerPage}
+            id="comprasPerPage"
+            value={comprasPerPage}
             onChange={handlePerPageChange}
             className="border rounded px-2 py-1"
           >
@@ -151,7 +150,7 @@ function TablaCompras() {
             <option value={10}>10</option>
             <option value={15}>15</option>
           </select>
-          <label htmlFor="usersPerPage" className="ml-2 text-gray-700">
+          <label htmlFor="comprasPerPage" className="ml-2 text-gray-700">
             Registros por página
           </label>
         </div>
@@ -163,7 +162,7 @@ function TablaCompras() {
           <input
             id="search"
             type="text"
-            placeholder="Buscar por nombre..."
+            placeholder="Buscar por cliente..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border rounded px-2 py-1"
@@ -188,11 +187,6 @@ function TablaCompras() {
             <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 transition duration-300 hover:bg-gray-500 hover:text-white">
               Visibilidad por Columna
             </button>
-            {/*  */}
-
-            {/* <ColumnVisibilityDropdown/> */}
-
-            {/*  */}
           </div>
         </div>
       </div>
@@ -219,22 +213,22 @@ function TablaCompras() {
             </tr>
           </thead>
           <tbody className="text-center">
-            {currentUsers.map((user) => (
-              <tr key={user.id}>
+            {currentCompras.map((compra) => (
+              <tr key={compra.id}>
                 <td className="border px-4 py-2">
                   {" "}
                   <input type="checkbox" className="" />
                 </td>
-                <td className="border px-4 py-2">Terminado</td>
-                <td className="border px-4 py-2">Terminado</td>
-                <td className="border px-4 py-2">Terminado</td>
-                <td className="border px-4 py-2">Terminado</td>
-                <td className="border px-4 py-2">Terminado</td>
-                <td className="border px-4 py-2">Terminado</td>
-                <td className="border px-4 py-2">Terminado</td>
-                <td className="border px-4 py-2">Terminado</td>
-                <td className="border px-4 py-2">Pagado</td>{" "}
-                <td className="border px-4 py-2">Efectivo</td>
+                <td className="border px-4 py-2">{compra.fecha}</td>
+                <td className="border px-4 py-2">{compra.nro_venta}</td>
+                <td className="border px-4 py-2">{compra.vendedor}</td>
+                <td className="border px-4 py-2"> {usuarios.find((user) => user.id === compra.cliente)?.username}</td>
+                <td className="border px-4 py-2">{compra.est_venta}</td>
+                <td className="border px-4 py-2">{compra.est_pago}</td>
+                <td className="border px-4 py-2">{compra.total}</td>
+                <td className="border px-4 py-2">{compra.pagado}</td>
+                <td className="border px-4 py-2">{compra.saldo}</td>
+                <td className="border px-4 py-2">{compra.met_pago}</td>
                 <td className="border px-4 py-2">
                   <Menu>
                     {({ open }) => (
@@ -254,12 +248,9 @@ function TablaCompras() {
                                 className={`${
                                   active ? "bg-gray-100" : ""
                                 } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
-                                onClick={() => openEditModal(user.id)}
+                                onClick={() => openEditModal(compra.id)}
                               >
-                                <span className="material-symbols-outlined">
-                                  note_stack
-                                </span>
-                                Imprimir Ventas
+                                Editar
                               </button>
                             )}
                           </Menu.Item>
@@ -269,67 +260,12 @@ function TablaCompras() {
                               <button
                                 className={`${
                                   active
-                                    ? "bg-gray-100 flex items-center gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
+                                    ? "bg-gray-100"
                                     : ""
-                                } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2  hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
-                                onClick={() => openEditModal(user.id)}
+                                } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                                onClick={() => deleteCompra(compra.id)}
                               >
-                                <span className="material-symbols-outlined">
-                                  visibility
-                                </span>
-                                Ver
-                              </button>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <button
-                                className={`${
-                                  active
-                                    ? "bg-gray-100 flex item-center gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
-                                    : ""
-                                } flex item-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
-                                onClick={() => openEditModal(user.id)}
-                              >
-                                <span className="material-symbols-outlined">
-                                  add
-                                </span>
-                                Añadir Pago
-                              </button>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <button
-                                className={`${
-                                  active
-                                    ? "bg-gray-100 flex items-center gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
-                                    : ""
-                                } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2  hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
-                                onClick={() => openEditModal(user.id)}
-                              >
-                                <span className="material-symbols-outlined">
-                                  local_atm
-                                </span>
-                                Ver Pago
-                              </button>
-                            )}
-                          </Menu.Item>
-
-                          <Menu.Item>
-                            {({ active }) => (
-                              <button
-                                className={`${
-                                  active
-                                    ? "bg-gray-100 gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
-                                    : ""
-                                } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
-                                onClick={() => deletePerson(user.id)}
-                              >
-                                <span className="material-symbols-outlined">
-                                  local_shipping
-                                </span>
-                                Añadir Entrega
+                                Eliminar
                               </button>
                             )}
                           </Menu.Item>
@@ -355,7 +291,7 @@ function TablaCompras() {
           </a>
         </li>
         {Array.from(
-          { length: Math.ceil(filteredUsers.length / usersPerPage) },
+          { length: Math.ceil(filteredCompras.length / comprasPerPage) },
           (_, index) => (
             <li key={index} className="page-item">
               <a
