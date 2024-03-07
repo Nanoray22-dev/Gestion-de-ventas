@@ -136,7 +136,7 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
                 value={userData.role}
                 onChange={handleChange}
               >
-                <option value="">Seleciona el estado del cliente</option>
+                <option value="">Seleciona el papel del cliente</option>
                 <option value="Administrador">Administrador</option>
                 <option value="RespVentasTiendas">RespVentasTiendas</option>
                 <option value="SupervisorComercial">SupervisorComercial</option>
@@ -149,13 +149,16 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
               >
                 Estado:
               </label>
-              <input
+              <select
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
                 name="status"
                 value={userData.status}
                 onChange={handleChange}
-              />
+              >
+                <option value="">Seleciona el estado del cliente</option>
+                <option value="active">active</option>
+                <option value="inactive">inactive</option>
+              </select>
             </div>
           </div>
           <div className="flex items-center justify-center mt-6">

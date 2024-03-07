@@ -14,7 +14,6 @@ function UsersList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
@@ -59,16 +58,16 @@ function UsersList() {
         });
         return;
       }
-  
+
       // Si el nombre de usuario no existe, agregar el usuario
-      console.log("Agregando usuario:", userData); // Agregamos un console.log() aquí
+      console.log("Agregando usuario:", userData); 
       const response = await axios.post(
         "http://127.0.0.1:8000/api/users",
         userData
       );
-  
-      console.log("Respuesta del servidor:", response.data); // Agregamos otro console.log() aquí
-  
+
+      console.log("Respuesta del servidor:", response.data); 
+
       if (response.status === 201) {
         // Mostrar SweetAlert de éxito
         Swal.fire({
@@ -77,7 +76,7 @@ function UsersList() {
           icon: "success",
         });
       }
-  
+
       closeModal();
       fetchUsers();
     } catch (error) {
@@ -110,7 +109,7 @@ function UsersList() {
     }
   };
 
-  const deletePerson = async () => {
+  const deletePerson = async (userId) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
       text: "Una vez eliminado, no podrás recuperar este usuario.",
@@ -123,19 +122,13 @@ function UsersList() {
     });
     if (result.isConfirmed) {
       try {
-
-      await Promise.all(
-        selectedUsers.map((userId) =>
-          axios.delete(`http://127.0.0.1:8000/api/users/${userId}`)
-        )
-      );
-      console.log("Usuarios eliminados correctamente");
-      fetchUsers();
-      setSelectedUsers([]);
-    } catch (error) {
-      console.error("Error al eliminar usuarios:", error.message);
-    }
-
+        await axios.delete(`http://localhost:8000/api/users/${userId}`);
+        console.log("Usuario eliminado correctamente");
+        fetchUsers();
+        setSelectedUsers([]);
+      } catch (error) {
+        console.error("Error al eliminar usuario:", error.message);
+      }
     }
   };
 
@@ -282,7 +275,10 @@ function UsersList() {
             </button>
             {/*  */}
 
-            <ColumnVisibilityDropdown />
+            <ColumnVisibilityDropdown
+              visibleColumns={visibleColumns}
+              handleColumnVisibilityChange={handleColumnVisibilityChange}
+            />
 
             {/*  */}
           </div>
