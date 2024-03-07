@@ -115,16 +115,22 @@ function EditUserModal({ isOpen, user, onSave, onClose }) {
               </select>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="status">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="status"
+              >
                 Estado:
               </label>
-              <input
+              <select
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
                 name="status"
                 value={userData.status}
                 onChange={handleChange}
-              />
+              >
+                <option value="">Seleciona el estado del cliente</option>
+                <option value="active">active</option>
+                <option value="inactive">inactive</option>
+              </select>
             </div>
           </div>
           <button

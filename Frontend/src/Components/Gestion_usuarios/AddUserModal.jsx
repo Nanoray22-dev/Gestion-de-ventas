@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
+import Swal from "sweetalert2";
 
 const AddUserModal = ({ isOpen, closeModal, addUser }) => {
   const [userData, setUserData] = useState({
@@ -16,12 +17,32 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
+    // Verificar si el valor está vacío y agregar o quitar la clase input-error en consecuencia
+    if (value === "") {
+      e.target.classList.add("input-error");
+    } else {
+      e.target.classList.remove("input-error");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addUser(userData);
-    closeModal();
+
+    // Verificar si algún campo está vacío
+    const isEmptyField = Object.values(userData).some((value) => value === "");
+
+    if (isEmptyField) {
+      // Mostrar alerta de campos vacíos
+      Swal.fire({
+        title: "Error",
+        text: "Por favor, complete todos los campos.",
+        icon: "error",
+      });
+    } else {
+      // Todos los campos están completos, agregar el usuario
+      addUser(userData);
+      closeModal();
+    }
   };
 
   return (
@@ -56,7 +77,9 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
                 Nombre de Usuario:
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  userData.username === "" && "input-error"
+                }`}
                 type="text"
                 name="username"
                 value={userData.username}
@@ -71,7 +94,10 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
                 Email:
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  userData.username === "" && "input-error"
+                }`} 
+                placeholder="ejemplo@gmail.com"
                 type="text"
                 name="email"
                 value={userData.email}
@@ -86,7 +112,9 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
                 Contraseña:
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  userData.username === "" && "input-error"
+                }`}
                 type="password"
                 name="password"
                 value={userData.password}
@@ -101,7 +129,9 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
                 Nombre de Empresa:
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  userData.username === "" && "input-error"
+                }`}
                 type="text"
                 name="empresa"
                 value={userData.empresa}
@@ -116,7 +146,9 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
                 Número de Teléfono:
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  userData.username === "" && "input-error"
+                }`}
                 type="text"
                 name="telefono"
                 value={userData.telefono}
@@ -131,12 +163,14 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
                 Papel:
               </label>
               <select
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  userData.username === "" && "input-error"
+                }`}
                 name="role"
                 value={userData.role}
                 onChange={handleChange}
               >
-                <option value="">Seleciona el papel del cliente</option>
+                <option value="">Seleciona el papel del usuario</option>
                 <option value="Administrador">Administrador</option>
                 <option value="RespVentasTiendas">RespVentasTiendas</option>
                 <option value="SupervisorComercial">SupervisorComercial</option>
@@ -150,12 +184,14 @@ const AddUserModal = ({ isOpen, closeModal, addUser }) => {
                 Estado:
               </label>
               <select
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  userData.username === "" && "input-error"
+                }`}
                 name="status"
                 value={userData.status}
                 onChange={handleChange}
               >
-                <option value="">Seleciona el estado del cliente</option>
+                <option value="">Seleciona el estado del usuario</option>
                 <option value="active">active</option>
                 <option value="inactive">inactive</option>
               </select>
