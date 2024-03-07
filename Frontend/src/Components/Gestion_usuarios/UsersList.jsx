@@ -25,7 +25,7 @@ function UsersList() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users");
+      const response = await axios.get("http://127.0.0.1:8000/api/users");
       setUsers(response.data);
     } catch (error) {
       console.log("Error fetching users", error);
@@ -47,7 +47,9 @@ function UsersList() {
   const addUser = async (userData) => {
     try {
       // Verificar si el nombre de usuario ya existe
-      const existingUser = users.find((user) => user.username === userData.username);
+      const existingUser = users.find(
+        (user) => user.username === userData.username
+      );
       if (existingUser) {
         // Mostrar SweetAlert de error
         Swal.fire({
@@ -61,7 +63,7 @@ function UsersList() {
       // Si el nombre de usuario no existe, agregar el usuario
       console.log("Agregando usuario:", userData); // Agregamos un console.log() aquí
       const response = await axios.post(
-        "http://localhost:8000/api/users",
+        "http://127.0.0.1:8000/api/users",
         userData
       );
   
@@ -92,7 +94,7 @@ function UsersList() {
   const handleEditUser = async (updatedUserData) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/users/${selectedUserId}`,
+        `http://127.0.0.1:8000/api/users/${selectedUserId}`,
         updatedUserData
       );
       if (response.status === 200) {
@@ -110,7 +112,6 @@ function UsersList() {
   };
 
   const deletePerson = async () => {
-
     const result = await Swal.fire({
       title: "¿Estás seguro?",
       text: "Una vez eliminado, no podrás recuperar este usuario.",
@@ -121,11 +122,12 @@ function UsersList() {
       confirmButtonText: "Sí, borrar",
       cancelButtonText: "Cancelar",
     });
-    if (result.isConfirmed){
+    if (result.isConfirmed) {
       try {
+
       await Promise.all(
         selectedUsers.map((userId) =>
-          axios.delete(`http://localhost:8000/api/users/${userId}`)
+          axios.delete(`http://127.0.0.1:8000/api/users/${userId}`)
         )
       );
       console.log("Usuarios eliminados correctamente");
@@ -134,8 +136,8 @@ function UsersList() {
     } catch (error) {
       console.error("Error al eliminar usuarios:", error.message);
     }
+
     }
-    
   };
 
   const filteredUsers = users.filter((user) =>
@@ -185,9 +187,25 @@ function UsersList() {
 
     Swal.fire({
       title: "¡Imprimiendo!",
-      text: "¡se ha imprimido correctamente!",
+      text: "¡se ha impreso correctamente!",
       icon: "success",
     });
+  };
+
+  const [visibleColumns, setVisibleColumns] = useState({
+    username: true,
+    email: true,
+    empresa: true,
+    telefono: true,
+    role: true,
+    status: true,
+  });
+
+  const handleColumnVisibilityChange = (columnName) => {
+    setVisibleColumns((prevVisibleColumns) => ({
+      ...prevVisibleColumns,
+      [columnName]: !prevVisibleColumns[columnName],
+    }));
   };
 
   return (
@@ -244,22 +262,22 @@ function UsersList() {
             className="border rounded px-2 py-1"
           />
           <div className="flex items-center">
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
               PDF
             </button>
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
               CSV
             </button>
             <button
               onClick={imprimirSelectedUsers}
               disabled={selectedUsers.length === 0}
-              className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2"
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white"
             >
               Impresión
             </button>
             <button
               onClick={deletePerson}
-              className="bg-gray-300 text-gray-700 rounded px-4 py-2"
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2 transition duration-300 hover:bg-gray-500 hover:text-white"
             >
               Borrar
             </button>
@@ -282,7 +300,6 @@ function UsersList() {
                   type="checkbox"
                   checked={selectAll}
                   onChange={handleSelectAll}
-                 
                 />
               </th>
               <th className="px-4 py-2">Nombre de Usuario</th>
@@ -305,15 +322,24 @@ function UsersList() {
                   />
                 </td>
 
-                <td className="border px-4 py-2">{user.username}</td>
-                <td className="border px-4 py-2">{user.email}</td>
-                <td className="border px-4 py-2">{user.empresa}</td>
-                <td className="border px-4 py-2">{user.telefono}</td>
-                <td className="border px-4 py-2">{user.role}</td>
-                <td className={`border px-4 py-2`}>
-                <span className={`inline-block bg-gray-200 rounded px-2 py-1 border border-gray-300 ${user.status === 'active' ? 'bg-green-300' : 'bg-red-300'} `}>{user.status}</span>
-                 
-                  </td>
+                <td className="border px-4 py-2 text-center">
+                  {user.username}
+                </td>
+                <td className="border px-4 py-2 text-center">{user.email}</td>
+                <td className="border px-4 py-2 text-center">{user.empresa}</td>
+                <td className="border px-4 py-2 text-center">
+                  {user.telefono}
+                </td>
+                <td className="border px-4 py-2 text-center">{user.role}</td>
+                <td className={`border px-4 py-2 text-center`}>
+                  <span
+                    className={`inline-block bg-gray-200 rounded px-4 py-1 border border-gray-300 ${
+                      user.status === "active" ? "bg-green-300" : "bg-red-300"
+                    } `}
+                  >
+                    {user.status}
+                  </span>
+                </td>
                 <td className="border px-4 py-2">
                   <Menu>
                     {({ open }) => (

@@ -1,4 +1,4 @@
-import { TextNavbar } from "./TextNavbar";
+import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
   HomeIcon,
@@ -11,16 +11,24 @@ import {
   CogIcon,
   PlusSmIcon,
 } from "@heroicons/react/outline";
-
-import { useState } from "react";
+import { TextNavbar } from "./TextNavbar";
 import "./Navbar.css";
 
 const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [showAdminDropdown, setShowAdminDropdown] = useState(false);
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+  const toggleLanguageDropdown = () => {
+    setShowLanguageDropdown(!showLanguageDropdown);
+    // Close the admin dropdown when language dropdown is toggled
+    setShowAdminDropdown(false);
+  };
+
+  const toggleAdminDropdown = () => {
+    setShowAdminDropdown(!showAdminDropdown);
+    // Close the language dropdown when admin dropdown is toggled
+    setShowLanguageDropdown(false);
   };
 
   const toggleSidebar = () => {
@@ -35,34 +43,58 @@ const Navbar = () => {
         <button className="menu-icon" onClick={toggleSidebar}>
           <TextNavbar spanIcon="menu" text="" />
         </button>
-        <div className="header-left">
-          <span className="material-icons-outlined">search</span>
+        <div className="header-left list-none">
+          <TextNavbar spanIcon="menu" text="" />
         </div>
         <div className="flex list-none">
           <Link to="/tablaventas">
             <TextNavbar spanIcon="shopping_bag" text="Ventas" />
           </Link>
-          <TextNavbar spanIcon="language" text="Idioma" />
+
+          {/* Language Dropdown */}
+          <div className="relative">
+            <TextNavbar
+              spanIcon="language"
+              text="Idioma"
+              onClick={toggleLanguageDropdown}
+            />
+            {showLanguageDropdown && (
+              <div
+                className="absolute right-0 mt-1 bg-white border border-gray-200 shadow-md rounded-md"
+                onMouseLeave={() => setShowLanguageDropdown(false)}
+              >
+                <ul>
+                  <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer">
+                    <Link to="/">Español</Link>
+                  </li>
+                  <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer">
+                    <Link to="/">Inglés</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+
           <TextNavbar spanIcon="info" text="Ayuda" />
 
-          {/* User Dropdown */}
+          {/* Admin Dropdown */}
           <div className="relative">
             <TextNavbar
               spanIcon="person"
               text="Admin"
-              onClick={toggleDropdown}
+              onClick={toggleAdminDropdown}
             />
-            {showDropdown && (
+            {showAdminDropdown && (
               <div
                 className="absolute right-0 mt-1 bg-white border border-gray-200 shadow-md rounded-md"
-                onMouseLeave={() => setShowDropdown(false)}
+                onMouseLeave={() => setShowAdminDropdown(false)}
               >
                 <ul>
                   <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer ">
                     <Link to="/userlist">Administrar Usuarios</Link>
                   </li>
                   <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer">
-                    <Link to="/">ConfiguraciÓn</Link>
+                    <Link to="/">Configuración</Link>
                   </li>
                   <li className="py-1 px-4 hover:bg-gray-100 cursor-pointer">
                     <Link to="/">Mis compras</Link>
@@ -82,10 +114,7 @@ const Navbar = () => {
       {/* End Header */}
 
       {/* Sidebar */}
-      <aside
-        id="sidebar"
-        className={sidebarOpen ? "sidebar-responsive" : ""}
-      >
+      <aside id="sidebar" className={sidebarOpen ? "sidebar-responsive" : ""}>
         <div className="sidebar-title">
           <div className="sidebar-brand">
             <h2 className="text-3xl font-bold mb-8 text-center flex items-center">
@@ -102,7 +131,7 @@ const Navbar = () => {
           <li className="sidebar-list-item">
             <Link
               to="/dashboard"
-              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300"
+              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-400"
             >
               <HomeIcon className="w-6 h-6 mr-2" />
               Inicio
@@ -111,7 +140,7 @@ const Navbar = () => {
           <li className="sidebar-list-item">
             <Link
               to="tablalistarcompras"
-              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300"
+              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-400"
             >
               <ShoppingCartIcon className="w-6 h-6 mr-2" />
               Compra
@@ -121,7 +150,7 @@ const Navbar = () => {
           <li className="sidebar-list-item">
             <Link
               to="/userlist"
-              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300"
+              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-400"
             >
               <UserAddIcon className="w-6 h-6 mr-2" />
               Usuarios
@@ -130,7 +159,7 @@ const Navbar = () => {
           <li className="sidebar-list-item">
             <Link
               to="/tablaventas"
-              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300"
+              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-400"
             >
               <CashIcon className="w-6 h-6 mr-2" />
               Venta
@@ -139,7 +168,7 @@ const Navbar = () => {
           <li className="sidebar-list-item">
             <Link
               to="tablalistarcompras"
-              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300"
+              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-400"
             >
               <PlusSmIcon className="w-6 h-6 mr-2" />
               Productos
@@ -148,7 +177,7 @@ const Navbar = () => {
           <li className="sidebar-list-item">
             <a
               href="#"
-              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300"
+              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-400"
             >
               <CurrencyDollarIcon className="w-6 h-6 mr-2" />
               Gasto
@@ -158,7 +187,7 @@ const Navbar = () => {
           <li className="sidebar-list-item">
             <a
               href="#"
-              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-300"
+              className="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-400"
             >
               <CogIcon className="w-6 h-6 mr-2" />
               Settings
@@ -166,7 +195,6 @@ const Navbar = () => {
           </li>
         </ul>
       </aside>
-      
 
       {/* End Sidebar */}
 
