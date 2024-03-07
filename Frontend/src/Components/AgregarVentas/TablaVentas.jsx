@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Cantidad } from "./Cantidad";
-import { Botones } from "./Botones";
+import  Botones  from "./Botones";
 
 const TablaVentas = () => {
   const [ventas, setVentas] = useState([]);
