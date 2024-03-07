@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
 import { Menu } from "@headlessui/react";
-
+import axios from "axios";
+import { endpoint } from "../../services/http";
 import ColumnVisibilityDropdown from "./ColumnVisibilityDropdown";
 
 function UsersList() {
@@ -18,6 +18,17 @@ function UsersList() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
+
+  const getPdf = async () => {
+    const response = await axios.get(`${endpoint}/usuarios-pdf`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(
+      new Blob([response.data], { type: "application/pdf" })
+    );
+    window.open(url, "_blank");
+  };
 
   useEffect(() => {
     fetchUsers();
@@ -59,16 +70,16 @@ function UsersList() {
         });
         return;
       }
-  
+
       // Si el nombre de usuario no existe, agregar el usuario
       console.log("Agregando usuario:", userData); // Agregamos un console.log() aquí
       const response = await axios.post(
         "http://127.0.0.1:8000/api/users",
         userData
       );
-  
+
       console.log("Respuesta del servidor:", response.data); // Agregamos otro console.log() aquí
-  
+
       if (response.status === 201) {
         // Mostrar SweetAlert de éxito
         Swal.fire({
@@ -77,7 +88,7 @@ function UsersList() {
           icon: "success",
         });
       }
-  
+
       closeModal();
       fetchUsers();
     } catch (error) {
@@ -123,19 +134,17 @@ function UsersList() {
     });
     if (result.isConfirmed) {
       try {
-
-      await Promise.all(
-        selectedUsers.map((userId) =>
-          axios.delete(`http://127.0.0.1:8000/api/users/${userId}`)
-        )
-      );
-      console.log("Usuarios eliminados correctamente");
-      fetchUsers();
-      setSelectedUsers([]);
-    } catch (error) {
-      console.error("Error al eliminar usuarios:", error.message);
-    }
-
+        await Promise.all(
+          selectedUsers.map((userId) =>
+            axios.delete(`http://127.0.0.1:8000/api/users/${userId}`)
+          )
+        );
+        console.log("Usuarios eliminados correctamente");
+        fetchUsers();
+        setSelectedUsers([]);
+      } catch (error) {
+        console.error("Error al eliminar usuarios:", error.message);
+      }
     }
   };
 
@@ -261,7 +270,10 @@ function UsersList() {
             className="border rounded px-2 py-1"
           />
           <div className="flex items-center">
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
+            <button
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white"
+              onClick={getPdf}
+            >
               PDF
             </button>
             <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
