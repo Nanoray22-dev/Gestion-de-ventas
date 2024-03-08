@@ -55,7 +55,7 @@ export default function Cards() {
                 className="w-20 h-32"
               />
             </div>
-            <p className="text-center text-xl font-semibold mb-4">Costos</p>
+            <p className="text-center text-xl font-semibold mb-4">Gastos</p>
             <p className="text-center text-2xl font-bold">{totalExpenses.toFixed(2)}</p>
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center px-32">

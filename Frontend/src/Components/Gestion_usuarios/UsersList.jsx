@@ -39,6 +39,7 @@ function UsersList() {
       setUsers(response.data);
     } catch (error) {
       console.log("Error fetching users", error);
+      
     }
   };
 
