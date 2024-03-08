@@ -248,7 +248,7 @@ function TablaCompras() {
                 <td className="border px-4 py-2">{compra.saldo}</td>
                 <td className="border px-4 py-2">
                   {compra.met_pago === "efectivo" ? (
-                    <span className="material-symbols-outlined">local_atm</span>
+                    <span className="material-symbols-outlined">Payments</span>
                   ) : compra.met_pago === "Tarjeta" ? (
                     <CreditCard />
                   ) : (
