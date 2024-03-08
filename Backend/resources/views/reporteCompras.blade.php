@@ -62,7 +62,7 @@
             <td>{{ $reporte->nro_venta }}</td>
             <td>{{ $reporte->vendedor }}</td>
             <td>{{ $reporte->cliente }}</td>
-            <td>{{ $reporte->est_veta }}</td>
+            <td>{{ $reporte->est_venta }}</td>
             <td>{{ $reporte->est_pago }}</td>
             <td>{{ $reporte->total }}</td>
             <td>{{ $reporte->pagado }}</td>
