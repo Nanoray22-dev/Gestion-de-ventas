@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import AddUserModal from "../Gestion_usuarios/AddUserModal";
 import EditUserModal from "../Gestion_usuarios/EditUserModal";
 import { Menu } from "@headlessui/react";
-import { flash, axios } from "../../services/http";
+import { flash } from "../../services/http";
 import axios from "axios";
 import { endpoint } from "../../services/http";
 
-import { Menu } from "@headlessui/react";
 import AgregarVentaModal from "./AgregarVentaModal";
 import EditComprasModal from "./EditComprasModal";
 import { CreditCard, Money } from "@material-ui/icons";
