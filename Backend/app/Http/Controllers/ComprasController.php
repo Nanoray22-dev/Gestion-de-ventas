@@ -34,24 +34,25 @@ class ComprasController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'fecha' => 'required|date',
-            'nro_venta' => 'required|string',
-            'vendedor' => 'required|string',
-            'cliente' => 'required|exists:usuarios,id', // Asegura que el cliente exista en la tabla 'usuarios'
-            'est_venta' => 'required|string',
-            'est_pago' => 'required|string',
-            'total' => 'required|numeric',
-            'pagado' => 'required|string',
-            'saldo' => 'required|numeric',
-            'met_pago' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'fecha' => 'required|date',
+        'nro_venta' => 'required|string',
+        'vendedor' => 'required|string',
+        'cliente' => 'required|exists:usuarios,id',
+        'est_venta' => 'required|string',
+        'est_pago' => 'required|string|in:Pagado,No Pagado,Realizado', // Agregado "Realizado"
+        'total' => 'required|numeric',
+        'pagado' => 'required|numeric', 
+        'saldo' => 'required|numeric',
+        'met_pago' => 'required|string',
+    ]);
 
-        $compra = Compras::create($request->all());
+    $compra = Compras::create($request->all());
 
-        return response()->json($compra, 201);
-    }
+    return response()->json($compra, 201);
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -70,7 +71,7 @@ class ComprasController extends Controller
             'vendedor' => 'required|string',
             'cliente' => 'required|exists:usuarios,id',
             'est_venta' => 'required|string',
-            'est_pago' => 'required|string',
+            'est_pago' => 'required|string|in:Pagado,No Pagado,Realizado', // Agregado "Realizado"
             'total' => 'required|numeric',
             'pagado' => 'required|string',
             'saldo' => 'required|numeric',

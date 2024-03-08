@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
 
@@ -18,13 +18,36 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (name === "fecha") {
+      const formattedDate = new Date(value).toISOString().split("T")[0];
+      setFormData({ ...formData, [name]: formattedDate });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    agregarVenta(formData);
-    closeModal();
+    try {
+      console.log("Datos a enviar:", JSON.stringify(formData)); // Agregado para depuración
+      const response = await fetch("http://127.0.0.1:8000/api/compras", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        console.log("La venta se agregó correctamente");
+        agregarVenta(formData);
+        closeModal();
+      } else {
+        console.error("Hubo un problema al agregar la venta");
+      }
+    } catch (error) {
+      console.error("Error al realizar la solicitud:", error);
+    }
   };
 
   return (
@@ -150,7 +173,7 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
                 onChange={handleChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
               >
-                <option value="Pagado">Pagado</option>
+                <option value="Realizado">Pagado</option>{" "}
                 <option value="No Pagado">No Pagado</option>
               </select>
             </div>
@@ -194,7 +217,7 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
                 htmlFor="saldo"
                 className="block text-sm font-medium text-gray-600"
               >
-                Total:
+                Saldo:
               </label>
               <input
                 type="number"
@@ -211,7 +234,7 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
                 htmlFor="met_pago"
                 className="block text-sm font-medium text-gray-600"
               >
-                Metodo de pago:
+                Método de pago:
               </label>
               <input
                 type="text"
@@ -236,10 +259,10 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
   );
 };
 
-export default AgregarVentaModal;
-
 AgregarVentaModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   agregarVenta: PropTypes.func.isRequired,
 };
+
+export default AgregarVentaModal;
