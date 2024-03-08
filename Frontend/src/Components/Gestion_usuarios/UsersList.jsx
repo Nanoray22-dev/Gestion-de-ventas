@@ -77,7 +77,7 @@ function UsersList() {
         userData
       );
 
-      console.log("Respuesta del servidor:", response.data); // Agregamos otro console.log() aquí
+      console.log("Respuesta del servidor:", response.data); 
 
       if (response.status === 201) {
         // Mostrar SweetAlert de éxito
@@ -114,7 +114,7 @@ function UsersList() {
         });
       }
       closeEditModal();
-      fetchUsers(); // Actualizar lista de usuarios después de editar uno
+      fetchUsers(); 
     } catch (error) {
       console.error("Error al actualizar usuario:", error.message);
     }
