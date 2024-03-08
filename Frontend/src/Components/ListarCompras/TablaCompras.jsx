@@ -5,7 +5,7 @@ import { endpoint } from "../../services/http";
 import { Menu } from "@headlessui/react";
 import AgregarVentaModal from "./AgregarVentaModal";
 import EditComprasModal from "./EditComprasModal";
-import { CreditCard, Money } from "@material-ui/icons";
+import { CreditCard } from "@material-ui/icons";
 
 function TablaCompras() {
   const [compras, setCompras] = useState([]);
@@ -71,15 +71,12 @@ function TablaCompras() {
 
   const addCompra = async (compraData) => {
     try {
-      // Realiza la solicitud HTTP POST al servidor para agregar la nueva venta
+
       const response = await axios.post(`${endpoint}/compras`, compraData);
 
       if (response.status === 200) {
-        // La venta se agregó correctamente
-        console.log("Venta agregada correctamente");
-        closeModal(); // Cierra el modal después de agregar la venta
-        fetchCompras(); // Actualiza la lista de compras para reflejar la nueva venta
-      } else {
+        closeModal(); 
+        fetchCompras(); 
         console.error("Error al agregar la venta:", response.statusText);
       }
     } catch (error) {
@@ -251,7 +248,7 @@ function TablaCompras() {
                 <td className="border px-4 py-2">{compra.saldo}</td>
                 <td className="border px-4 py-2">
                   {compra.met_pago === "efectivo" ? (
-                    <Money />
+                    <span className="material-symbols-outlined">local_atm</span>
                   ) : compra.met_pago === "Tarjeta" ? (
                     <CreditCard />
                   ) : (

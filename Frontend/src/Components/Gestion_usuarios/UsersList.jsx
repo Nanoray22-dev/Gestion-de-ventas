@@ -133,16 +133,12 @@ function UsersList() {
     });
     if (result.isConfirmed) {
       try {
-        await Promise.all(
-          selectedUsers.map((userId) =>
-            axios.delete(`http://127.0.0.1:8000/api/users/${userId}`)
-          )
-        );
-        console.log("Usuarios eliminados correctamente");
+        await axios.delete(`http://localhost:8000/api/users/${userId}`);
+        console.log("Usuario eliminado correctamente");
         fetchUsers();
         setSelectedUsers([]);
       } catch (error) {
-        console.error("Error al eliminar usuarios:", error.message);
+        console.error("Error al eliminar usuario:", error.message);
       }
     }
   };
