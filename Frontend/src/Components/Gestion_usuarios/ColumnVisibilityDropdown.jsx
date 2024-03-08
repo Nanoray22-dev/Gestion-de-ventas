@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ColumnVisibilityDropdown() {
+function ColumnVisibilityDropdown({handleColumnVisibilityChange}) {
   const [isOpen, setIsOpen] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState({
     username: true,
@@ -20,13 +20,14 @@ function ColumnVisibilityDropdown() {
       ...prevVisibleColumns,
       [columnName]: !prevVisibleColumns[columnName],
     }));
+    handleColumnVisibilityChange(columnName)
   };
 
   return (
-    <div className="dropdown  px-4 py-2">
+    <div className="dropdown px-4 py-2">
       <button
         onClick={toggleDropdown}
-        className="bg-gray-300 text-gray-700 rounded px-4 py-2"
+        className="bg-gray-300 text-gray-700 rounded px-4 py-2 transition duration-300 hover:bg-gray-500 hover:text-white"
       >
         Visibilidad por columna
       </button>

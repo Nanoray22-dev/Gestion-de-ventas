@@ -1,8 +1,14 @@
-// Dashboard.js
-
+import { useState } from "react";
 import Cards from "./Cards";
 
 const Dashboard = () => {
+  const [filter, setFilter] = useState("hoy"); // Estado para almacenar el filtro seleccionado
+
+  // Función para manejar el cambio de filtro
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="main-title">
@@ -11,7 +17,12 @@ const Dashboard = () => {
       <div className="flex items-center justify-between px-5 pt-3">
         <h2 className="text-4xl ml-14">Bienvenido Admin</h2>
         <div className="btn-group" role="group" aria-label="Basic example">
-          <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l-2xl">
+          <button
+            className={`bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l-2xl ${
+              filter === "hoy" ? "bg-blue-700" : ""
+            }`}
+            onClick={() => handleFilterChange("hoy")}
+          >
             Hoy
           </button>
           <button className="bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4">
@@ -25,8 +36,9 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
-      <Cards />
+      <Cards filter={filter} /> {/* Pasar el filtro como prop a Cards */}
     </div>
   );
 };
+
 export default Dashboard;

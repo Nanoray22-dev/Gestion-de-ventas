@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
 import { Menu } from "@headlessui/react";
-
+import axios from "axios";
+import { endpoint } from "../../services/http";
 import ColumnVisibilityDropdown from "./ColumnVisibilityDropdown";
 
 function UsersList() {
@@ -14,10 +14,20 @@ function UsersList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
+
+  const getPdf = async () => {
+    const response = await axios.get(`${endpoint}/usuarios-pdf`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(
+      new Blob([response.data], { type: "application/pdf" })
+    );
+    window.open(url, "_blank");
+  };
 
   useEffect(() => {
     fetchUsers();
@@ -48,7 +58,9 @@ function UsersList() {
   const addUser = async (userData) => {
     try {
       // Verificar si el nombre de usuario ya existe
-      const existingUser = users.find((user) => user.username === userData.username);
+      const existingUser = users.find(
+        (user) => user.username === userData.username
+      );
       if (existingUser) {
         // Mostrar SweetAlert de error
         Swal.fire({
@@ -58,16 +70,16 @@ function UsersList() {
         });
         return;
       }
-  
+
       // Si el nombre de usuario no existe, agregar el usuario
-      console.log("Agregando usuario:", userData); // Agregamos un console.log() aquí
+      console.log("Agregando usuario:", userData);
       const response = await axios.post(
         "http://127.0.0.1:8000/api/users",
         userData
       );
-  
-      console.log("Respuesta del servidor:", response.data); // Agregamos otro console.log() aquí
-  
+
+      console.log("Respuesta del servidor:", response.data); 
+
       if (response.status === 201) {
         // Mostrar SweetAlert de éxito
         Swal.fire({
@@ -76,7 +88,7 @@ function UsersList() {
           icon: "success",
         });
       }
-  
+
       closeModal();
       fetchUsers();
     } catch (error) {
@@ -103,14 +115,13 @@ function UsersList() {
         });
       }
       closeEditModal();
-      fetchUsers(); // Actualizar lista de usuarios después de editar uno
+      fetchUsers(); 
     } catch (error) {
       console.error("Error al actualizar usuario:", error.message);
     }
   };
 
-  const deletePerson = async () => {
-
+  const deletePerson = async (userId) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
       text: "Una vez eliminado, no podrás recuperar este usuario.",
@@ -121,21 +132,16 @@ function UsersList() {
       confirmButtonText: "Sí, borrar",
       cancelButtonText: "Cancelar",
     });
-    if (result.isConfirmed){
+    if (result.isConfirmed) {
       try {
-      await Promise.all(
-        selectedUsers.map((userId) =>
-          axios.delete(`http://127.0.0.1:8000/api/users/${userId}`)
-        )
-      );
-      console.log("Usuarios eliminados correctamente");
-      fetchUsers();
-      setSelectedUsers([]);
-    } catch (error) {
-      console.error("Error al eliminar usuarios:", error.message);
+        await axios.delete(`http://localhost:8000/api/users/${userId}`);
+        console.log("Usuario eliminado correctamente");
+        fetchUsers();
+        setSelectedUsers([]);
+      } catch (error) {
+        console.error("Error al eliminar usuario:", error.message);
+      }
     }
-    }
-    
   };
 
   const filteredUsers = users.filter((user) =>
@@ -188,6 +194,22 @@ function UsersList() {
       text: "¡se ha impreso correctamente!",
       icon: "success",
     });
+  };
+
+  const [visibleColumns, setVisibleColumns] = useState({
+    username: true,
+    email: true,
+    empresa: true,
+    telefono: true,
+    role: true,
+    status: true,
+  });
+
+  const handleColumnVisibilityChange = (columnName) => {
+    setVisibleColumns((prevVisibleColumns) => ({
+      ...prevVisibleColumns,
+      [columnName]: !prevVisibleColumns[columnName],
+    }));
   };
 
   return (
@@ -244,28 +266,34 @@ function UsersList() {
             className="border rounded px-2 py-1"
           />
           <div className="flex items-center">
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+            <button
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white"
+              onClick={getPdf}
+            >
               PDF
             </button>
-            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2">
+            <button className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white">
               CSV
             </button>
             <button
               onClick={imprimirSelectedUsers}
               disabled={selectedUsers.length === 0}
-              className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2"
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white"
             >
               Impresión
             </button>
             <button
               onClick={deletePerson}
-              className="bg-gray-300 text-gray-700 rounded px-4 py-2"
+              className="bg-gray-300 text-gray-700 rounded px-4 py-2 transition duration-300 hover:bg-gray-500 hover:text-white"
             >
               Borrar
             </button>
             {/*  */}
 
-            <ColumnVisibilityDropdown />
+            <ColumnVisibilityDropdown
+              visibleColumns={visibleColumns}
+              handleColumnVisibilityChange={handleColumnVisibilityChange}
+            />
 
             {/*  */}
           </div>
@@ -282,7 +310,6 @@ function UsersList() {
                   type="checkbox"
                   checked={selectAll}
                   onChange={handleSelectAll}
-                 
                 />
               </th>
               <th className="px-4 py-2">Nombre de Usuario</th>
@@ -305,15 +332,24 @@ function UsersList() {
                   />
                 </td>
 
-                <td className="border px-4 py-2">{user.username}</td>
-                <td className="border px-4 py-2">{user.email}</td>
-                <td className="border px-4 py-2">{user.empresa}</td>
-                <td className="border px-4 py-2">{user.telefono}</td>
-                <td className="border px-4 py-2">{user.role}</td>
-                <td className={`border px-4 py-2`}>
-                <span className={`inline-block bg-gray-200 rounded px-2 py-1 border border-gray-300 ${user.status === 'active' ? 'bg-green-300' : 'bg-red-300'} `}>{user.status}</span>
-                 
-                  </td>
+                <td className="border px-4 py-2 text-center">
+                  {user.username}
+                </td>
+                <td className="border px-4 py-2 text-center">{user.email}</td>
+                <td className="border px-4 py-2 text-center">{user.empresa}</td>
+                <td className="border px-4 py-2 text-center">
+                  {user.telefono}
+                </td>
+                <td className="border px-4 py-2 text-center">{user.role}</td>
+                <td className={`border px-4 py-2 text-center`}>
+                  <span
+                    className={`inline-block bg-gray-200 rounded px-4 py-1 border border-gray-300 ${
+                      user.status === "active" ? "bg-green-300" : "bg-red-300"
+                    } `}
+                  >
+                    {user.status}
+                  </span>
+                </td>
                 <td className="border px-4 py-2">
                   <Menu>
                     {({ open }) => (
