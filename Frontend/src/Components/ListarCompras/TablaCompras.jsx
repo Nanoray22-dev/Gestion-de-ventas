@@ -5,6 +5,7 @@ import { endpoint } from "../../services/http";
 import { Menu } from "@headlessui/react";
 import AgregarVentaModal from "./AgregarVentaModal";
 import EditComprasModal from "./EditComprasModal";
+import { CreditCard, Money } from "@material-ui/icons";
 
 function TablaCompras() {
   const [compras, setCompras] = useState([]);
@@ -18,14 +19,18 @@ function TablaCompras() {
   const [comprasPerPage, setComprasPerPage] = useState(10);
 
   const getPdf = async () => {
-    const response = await axios.get(`${endpoint}/compras-pdf`, {
-      responseType: "blob",
-    });
+    try {
+      const response = await axios.get(`${endpoint}/compras-pdf`, {
+        responseType: "blob",
+      });
 
-    const url = window.URL.createObjectURL(
-      new Blob([response.data], { type: "application/pdf" })
-    );
-    window.open(url, "_blank");
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { type: "application/pdf" })
+      );
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error("Error al obtener el PDF:", error);
+    }
   };
 
   useEffect(() => {
@@ -49,18 +54,7 @@ function TablaCompras() {
     } catch (error) {
       console.log("Error fetching usuarios", error);
     }
-    console.log(setUsuarios)
-  };
-
-  const getPdf = async () => {
-    const response = await axios.get(`${endpoint}/compras-pdf`, {
-      responseType: "blob",
-    });
-
-    const url = window.URL.createObjectURL(
-      new Blob([response.data], { type: "application/pdf" })
-    );
-    window.open(url, "_blank");
+    console.log(setUsuarios);
   };
 
   // const openAddCompraModal = () => {
@@ -77,14 +71,19 @@ function TablaCompras() {
 
   const addCompra = async (compraData) => {
     try {
-        await axios.post(`${endpoint}/compras`, compraData);
+      // Realiza la solicitud HTTP POST al servidor para agregar la nueva venta
+      const response = await axios.post(`${endpoint}/compras`, compraData);
 
-      console.log("Compra agregada correctamente");
-
-      closeModal();
-      fetchCompras();
+      if (response.status === 200) {
+        // La venta se agregó correctamente
+        console.log("Venta agregada correctamente");
+        closeModal(); // Cierra el modal después de agregar la venta
+        fetchCompras(); // Actualiza la lista de compras para reflejar la nueva venta
+      } else {
+        console.error("Error al agregar la venta:", response.statusText);
+      }
     } catch (error) {
-      console.error("Error al agregar compra:", error.message);
+      console.error("Error al agregar la venta:", error.message);
     }
   };
 
@@ -95,7 +94,7 @@ function TablaCompras() {
 
   const handleEditCompra = async (updatedCompraData) => {
     try {
-          await axios.put(
+      await axios.put(
         `${endpoint}/compras/${selectedCompraId}`,
         updatedCompraData
       );
@@ -117,14 +116,18 @@ function TablaCompras() {
     }
   };
 
-  const filteredCompras = compras.filter((compra) =>
-    // compra.cliente.toLowerCase().includes(searchTerm.toLowerCase())
-    compra.cliente
+  const filteredCompras = compras.filter(
+    (compra) =>
+      // compra.cliente.toLowerCase().includes(searchTerm.toLowerCase())
+      compra.cliente
   );
 
   const indexOfLastCompra = currentPage * comprasPerPage;
   const indexOfFirstCompra = indexOfLastCompra - comprasPerPage;
-  const currentCompras = filteredCompras.slice(indexOfFirstCompra, indexOfLastCompra);
+  const currentCompras = filteredCompras.slice(
+    indexOfFirstCompra,
+    indexOfLastCompra
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -234,18 +237,32 @@ function TablaCompras() {
                 <td className="border px-4 py-2">{compra.fecha}</td>
                 <td className="border px-4 py-2">{compra.nro_venta}</td>
                 <td className="border px-4 py-2">{compra.vendedor}</td>
-                <td className="border px-4 py-2"> {usuarios.find((user) => user.id === compra.cliente)?.username}</td>
+                <td className="border px-4 py-2">
+                  {" "}
+                  {
+                    usuarios.find((user) => user.id === compra.cliente)
+                      ?.username
+                  }
+                </td>
                 <td className="border px-4 py-2">{compra.est_venta}</td>
                 <td className="border px-4 py-2">{compra.est_pago}</td>
                 <td className="border px-4 py-2">{compra.total}</td>
                 <td className="border px-4 py-2">{compra.pagado}</td>
                 <td className="border px-4 py-2">{compra.saldo}</td>
-                <td className="border px-4 py-2">{compra.met_pago}</td>
+                <td className="border px-4 py-2">
+                  {compra.met_pago === "efectivo" ? (
+                    <Money />
+                  ) : compra.met_pago === "Tarjeta" ? (
+                    <CreditCard />
+                  ) : (
+                    compra.met_pago
+                  )}
+                </td>
                 <td className="border px-4 py-2">
                   <Menu>
                     {({ open }) => (
                       <>
-                        <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                        <Menu.Button className="border text-gray-500 py-1 px-2 rounded mr-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700">
                           Acciones
                         </Menu.Button>
 
@@ -258,11 +275,16 @@ function TablaCompras() {
                             {({ active }) => (
                               <button
                                 className={`${
-                                  active ? "bg-gray-100" : ""
-                                } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                                  active
+                                    ? "bg-gray-100 flex items-center gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
+                                    : ""
+                                } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2  hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
                                 onClick={() => openEditModal(compra.id)}
                               >
-                                Editar
+                                <span className="material-symbols-outlined">
+                                  note_stack
+                                </span>
+                                Imprimir Ventas
                               </button>
                             )}
                           </Menu.Item>
@@ -272,12 +294,67 @@ function TablaCompras() {
                               <button
                                 className={`${
                                   active
-                                    ? "bg-gray-100"
+                                    ? "bg-gray-100 flex items-center gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
                                     : ""
-                                } block px-4 py-2 text-sm text-gray-700 w-full text-left`}
+                                } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2  hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
+                                onClick={() => openEditModal(compra.id)}
+                              >
+                                <span className="material-symbols-outlined">
+                                  visibility
+                                </span>
+                                Ver
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active
+                                    ? "bg-gray-100 flex item-center gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
+                                    : ""
+                                } flex item-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
+                                onClick={() => openEditModal(compra.id)}
+                              >
+                                <span className="material-symbols-outlined">
+                                  add
+                                </span>
+                                Añadir Pago
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active
+                                    ? "bg-gray-100 flex items-center gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
+                                    : ""
+                                } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2  hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
+                                onClick={() => openEditModal(compra.id)}
+                              >
+                                <span className="material-symbols-outlined">
+                                  local_atm
+                                </span>
+                                Ver Pago
+                              </button>
+                            )}
+                          </Menu.Item>
+
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active
+                                    ? "bg-gray-100 gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700"
+                                    : ""
+                                } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-left gap-2 hover:bg-gray-300 hover:text-white hover:transition hover:duration-700`}
                                 onClick={() => deleteCompra(compra.id)}
                               >
-                                Eliminar
+                                <span className="material-symbols-outlined">
+                                  local_shipping
+                                </span>
+                                Añadir Entrega
                               </button>
                             )}
                           </Menu.Item>
