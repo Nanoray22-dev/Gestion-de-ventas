@@ -48,7 +48,7 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Empresa</th>
-            <th>Teléfono</th>
+            <th>Telefono</th>
             <th>Rol</th>
             <th>Estado</th>
         </tr>
