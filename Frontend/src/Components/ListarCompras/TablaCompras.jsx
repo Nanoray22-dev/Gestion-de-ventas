@@ -5,7 +5,7 @@ import { endpoint } from "../../services/http";
 import { Menu } from "@headlessui/react";
 import AgregarVentaModal from "./AgregarVentaModal";
 import EditComprasModal from "./EditComprasModal";
-import {  CreditCard, Money,  } from '@material-ui/icons';
+import { CreditCard, Money } from "@material-ui/icons";
 
 function TablaCompras() {
   const [compras, setCompras] = useState([]);
@@ -19,14 +19,18 @@ function TablaCompras() {
   const [comprasPerPage, setComprasPerPage] = useState(10);
 
   const getPdf = async () => {
-    const response = await axios.get(`${endpoint}/compras-pdf`, {
-      responseType: "blob",
-    });
+    try {
+      const response = await axios.get(`${endpoint}/compras-pdf`, {
+        responseType: "blob",
+      });
 
-    const url = window.URL.createObjectURL(
-      new Blob([response.data], { type: "application/pdf" })
-    );
-    window.open(url, "_blank");
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { type: "application/pdf" })
+      );
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error("Error al obtener el PDF:", error);
+    }
   };
 
   useEffect(() => {
@@ -51,17 +55,6 @@ function TablaCompras() {
       console.log("Error fetching usuarios", error);
     }
     console.log(setUsuarios);
-  };
-
-  const getPdf = async () => {
-    const response = await axios.get(`${endpoint}/compras-pdf`, {
-      responseType: "blob",
-    });
-
-    const url = window.URL.createObjectURL(
-      new Blob([response.data], { type: "application/pdf" })
-    );
-    window.open(url, "_blank");
   };
 
   // const openAddCompraModal = () => {
@@ -258,7 +251,7 @@ function TablaCompras() {
                 <td className="border px-4 py-2">{compra.saldo}</td>
                 <td className="border px-4 py-2">
                   {compra.met_pago === "efectivo" ? (
-                    <Money className="w-full" />
+                    <Money />
                   ) : compra.met_pago === "Tarjeta" ? (
                     <CreditCard />
                   ) : (
