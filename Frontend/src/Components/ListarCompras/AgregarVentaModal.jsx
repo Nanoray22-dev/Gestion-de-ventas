@@ -5,15 +5,15 @@ import PropTypes from "prop-types";
 const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
   const [formData, setFormData] = useState({
     fecha: "",
-    numeroVenta: "",
+    nro_venta: "",
     vendedor: "",
     cliente: "",
-    estadoVenta: "",
-    estadoPago: "",
+    est_venta: "",
+    est_pago: "",
     total: "",
     pagado: "",
     saldo: "",
-    metodoPago: "",
+    met_pago: "",
   });
 
   const handleChange = (e) => {
@@ -70,16 +70,16 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
 
             <div className="mb-4">
               <label
-                htmlFor="numeroVenta"
+                htmlFor="nro_venta"
                 className="block text-sm font-medium text-gray-600"
               >
                 Nro. Venta/Factura:
               </label>
               <input
                 type="text"
-                id="numeroVenta"
-                name="numeroVenta"
-                value={formData.numeroVenta}
+                id="nro_venta"
+                name="nro_venta"
+                value={formData.nro_venta}
                 onChange={handleChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
@@ -121,16 +121,16 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
 
             <div className="mb-4">
               <label
-                htmlFor="estadoVenta"
+                htmlFor="est_venta"
                 className="block text-sm font-medium text-gray-600"
               >
                 Estado de la Venta:
               </label>
               <input
                 type="text"
-                id="estadoVenta"
-                name="estadoVenta"
-                value={formData.estadoVenta}
+                id="est_venta"
+                name="est_venta"
+                value={formData.est_venta}
                 onChange={handleChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
@@ -138,15 +138,15 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
 
             <div className="mb-4">
               <label
-                htmlFor="estadoPago"
+                htmlFor="est_pago"
                 className="block text-sm font-medium text-gray-600"
               >
                 Estado de Pago:
               </label>
               <select
-                id="estadoPago"
-                name="estadoPago"
-                value={formData.estadoPago}
+                id="est_pago"
+                name="est_pago"
+                value={formData.est_pago}
                 onChange={handleChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
               >
@@ -156,41 +156,69 @@ const AgregarVentaModal = ({ isOpen, closeModal, agregarVenta }) => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="total"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Total:
               </label>
               <input
                 type="number"
+                id="total"
+                name="total"
+                value={formData.total}
+                onChange={handleChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="pagado"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Pagado:
               </label>
               <input
                 type="number"
+                id="pagado"
+                name="pagado"
+                value={formData.pagado}
+                onChange={handleChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
-                Saldo:
+              <label
+                htmlFor="saldo"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Total:
               </label>
               <input
                 type="number"
+                id="saldo"
+                name="saldo"
+                value={formData.saldo}
+                onChange={handleChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
-                Metodo de Pago:
+              <label
+                htmlFor="met_pago"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Metodo de pago:
               </label>
               <input
                 type="text"
+                id="met_pago"
+                name="met_pago"
+                value={formData.met_pago}
+                onChange={handleChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
             </div>
