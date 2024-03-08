@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { endpoint } from "../../services/http";
 import AddUserModal from "../Gestion_usuarios/AddUserModal";
 import EditUserModal from "../Gestion_usuarios/EditUserModal";
 import { Menu } from "@headlessui/react";
+import { flash, axios } from "../../services/http";
 
 function TablaCompras() {
   const [users, setUsers] = useState([]); /*  */
@@ -15,8 +14,8 @@ function TablaCompras() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
 
-  const getPdf = async () => {
-    const response = await axios.get(`${endpoint}/compras-pdf`, {
+  const getComprasPdf = async () => {
+    const response = await axios.get(`${flash}/compras-pdf`, {
       responseType: "blob",
     });
 
@@ -171,7 +170,7 @@ function TablaCompras() {
           <div className="flex items-center">
             <button
               className="bg-gray-300 text-gray-700 rounded px-4 py-2 mr-2 transition duration-300 hover:bg-gray-500 hover:text-white"
-              onClick={getPdf}
+              onClick={getComprasPdf}
             >
               PDF
             </button>
